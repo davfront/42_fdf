@@ -1,44 +1,67 @@
-NAME			=	fdf
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dapereir <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
+#    Updated: 2022/12/14 16:34:45 by dapereir         ###   ########lyon.fr    #
+#                                                                              #
+# **************************************************************************** #
 
-CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror
-AR				=	ar rcs
-RM				=	rm -f
+NAME				=	fdf
 
-SRCS			=	fdf.c\
+CC					=	cc
+CFLAGS				=	-Wall -Wextra -Werror
+RM					=	rm -rf
 
-OBJS			=	$(SRCS:.c=.o)
+SRCS_FILES			=	color.c\
+						point.c\
+						draw.c\
+						fdf.c\
 
-MLX_DIR			=	./mlx
-MLX				=	$(MLX_DIR)/libmlx.a
-MLX_FLAGS		=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+SRCS_DIR			=	./src
+SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
-%.o:			%.c Makefile $(MLX)
-				$(CC) $(CFLAGS) -I $(MLX_DIR) -c $< -o $@
+OBJS_FILES			=	$(SRCS_FILES:.c=.o)
+OBJS_DIR			=	./obj
+OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
+
+HEADER_DIR			=	./includes
+HEADER				=	$(HEADER_DIR)/fdf.h
+HEADER_INC			=	-I $(HEADER_DIR)
+
+MLX_DIR				=	./mlx
+MLX					=	$(MLX_DIR)/libmlx.a
+MLX_INC				=	-I $(MLX_DIR)
+MLX_FLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: all
-all:			$(NAME)
+all:				$(NAME)
 
-$(NAME):		$(OBJS) $(MLX)
-				$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+$(OBJS_DIR):
+					mkdir -p $(OBJS_DIR)
 
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(OBJS_DIR) $(MLX)
+					$(CC) $(CFLAGS) $(MLX_INC) $(HEADER_INC) -c $< -o $@
 
-.PHONY: mlx
-mlx:			$(MLX)
+$(NAME):			$(OBJS) $(MLX)
+					$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX):
-				$(MAKE) -C $(MLX_DIR)
+					$(MAKE) -C $(MLX_DIR)
 
 .PHONY: clean
 clean:
-				$(RM) $(OBJS)
+					$(RM) $(OBJS_DIR)
 
 .PHONY: fclean
-fclean:			clean
-				$(RM) $(NAME)
-				$(MAKE) -C $(MLX_DIR) clean
+fclean:				clean
+					$(RM) $(NAME)
+					$(MAKE) -C $(MLX_DIR) clean
 
 .PHONY: re
-re:				fclean
-				$(MAKE) all
-				$(MAKE) -C $(MLX_DIR) all
+re:					fclean
+					$(MAKE) all
+					$(MAKE) -C $(MLX_DIR) all
