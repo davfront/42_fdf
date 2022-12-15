@@ -21,17 +21,17 @@ static float    fdf_abs(float x)
 	return (x);
 }
 
-void	fdf_draw_pixel(t_data *data, t_point p, int color)
+void	fdf_draw_pixel(t_data *data, t_pixel p)
 {
 	char	*dst;
 
 	dst = data->addr;
 	dst += p.y * data->line_length;
 	dst += p.x * (data->bits_per_pixel / 8);
-	*(unsigned int *)dst = color;
+	*(unsigned int *)dst = p.color;
 }
 
-void	fdf_draw_line(t_data *data, t_point p1, t_point p2, int color1, int color2)
+void	fdf_draw_line(t_data *data, t_pixel p1, t_pixel p2)
 {
 	float	len;
 	float	len_x;
@@ -39,12 +39,11 @@ void	fdf_draw_line(t_data *data, t_point p1, t_point p2, int color1, int color2)
 	float	delta_x;
 	float	delta_y;
 	int		i;
-	int		color;
-	t_point	p;
+	t_pixel	p;
 
 	if (p1.x == p2.x && p1.y == p2.y)
 	{
-		fdf_draw_pixel(data, p1, WHITE);
+		fdf_draw_pixel(data, p1);
 		return;
 	}
 	len_x = fdf_abs((float)p2.x - (float)p1.x);
@@ -59,8 +58,8 @@ void	fdf_draw_line(t_data *data, t_point p1, t_point p2, int color1, int color2)
 	{
 		p.x = p1.x + (int)(i * delta_x);
 		p.y = p1.y + (int)(i * delta_y);
-		color = fdf_color_mix(color1, color2, (float)i / len);
-		fdf_draw_pixel(data, p, color);
+		p.color = fdf_color_mix(p1.color, p2.color, (float)i / len);
+		fdf_draw_pixel(data, p);
 		i++;
 	}
 }

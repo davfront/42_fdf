@@ -17,7 +17,7 @@ CFLAGS				=	-Wall -Wextra -Werror
 RM					=	rm -rf
 
 SRCS_FILES			=	color.c\
-						point.c\
+						pixel.c\
 						draw.c\
 						fdf.c\
 
@@ -43,7 +43,7 @@ all:				$(NAME)
 $(OBJS_DIR):
 					mkdir -p $(OBJS_DIR)
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(OBJS_DIR) $(MLX)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(OBJS_DIR) $(MLX) $(HEADER)
 					$(CC) $(CFLAGS) $(MLX_INC) $(HEADER_INC) -c $< -o $@
 
 $(NAME):			$(OBJS) $(MLX)

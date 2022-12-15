@@ -12,11 +12,12 @@
 
 #include "fdf.h"
 
-t_point	fdf_point(unsigned int x, unsigned int y)
+t_pixel	fdf_new_pixel(int x, int y, int color)
 {
-	t_point	p;
+	t_pixel	p;
 
 	p.x = x;
 	p.y = y;
+	p.color = color;
 	return (p);
 }
