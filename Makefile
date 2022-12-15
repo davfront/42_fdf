@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/15 22:56:26 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/16 00:24:50 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,34 +48,40 @@ else
 	MLX_INC				=	-I $(MLX_DIR)
 	MLX_OBJ_FLAGS		=	$(MLX_INC) $(HEADER_INC)
 	MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -framework OpenGL -framework AppKit
-
 endif
+
+FT_DIR				=	./libft
+FT					=	$(FT_DIR)/libft.a
+FT_INC				=	-I $(FT_DIR)/include
+FT_FLAGS			=	-L $(FT_DIR) -l ft
 
 .PHONY: all
 all:				$(NAME)
 
-$(OBJS_DIR):
-					mkdir -p $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(MLX) $(FT)
+					mkdir -p $(@D)
+					$(CC) $(CFLAGS) $(MLX_OBJ_FLAGS) $(FT_INC) -c $< -o $@
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(OBJS_DIR) $(MLX)
-					$(CC) $(CFLAGS) $(MLX_OBJ_FLAGS) -c $< -o $@
-
-$(NAME):			$(OBJS) $(MLX)
-					$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+$(NAME):			$(OBJS) $(MLX) $(FT)
+					$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) $(FT_FLAGS) -o $(NAME)
 
 $(MLX):
 					$(MAKE) -C $(MLX_DIR)
 
+$(FT):
+					$(MAKE) -C $(FT_DIR)
+
 .PHONY: clean
 clean:
 					$(RM) $(OBJS_DIR)
+					$(MAKE) -C $(FT_DIR) clean
 
 .PHONY: fclean
 fclean:				clean
 					$(RM) $(NAME)
 					$(MAKE) -C $(MLX_DIR) clean
+					$(MAKE) -C $(FT_DIR) fclean
 
 .PHONY: re
 re:					fclean
 					$(MAKE) all
-					$(MAKE) -C $(MLX_DIR) all
