@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/15 22:32:50 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/15 22:52:32 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJS_FILES			=	$(SRCS_FILES:.c=.o)
 OBJS_DIR			=	./obj
 OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
 
-HEADER_DIR			=	./includes
+HEADER_DIR			=	./include
 HEADER				=	$(HEADER_DIR)/fdf.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
