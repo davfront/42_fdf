@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/15 09:52:08 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/15 22:32:50 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,24 @@ HEADER_DIR			=	./includes
 HEADER				=	$(HEADER_DIR)/fdf.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
-MLX_DIR				=	./minilibx-macos
-MLX					=	$(MLX_DIR)/libmlx.a
-MLX_INC				=	-I $(MLX_DIR)
-MLX_FLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+# Detect OS
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+#	Linux
+	MLX_DIR				=	./minilibx-linux
+	MLX					=	$(MLX_DIR)/libmlx.a
+	MLX_INC				=	-I $(MLX_DIR)
+	MLX_OBJ_FLAGS		=	-I/usr/include $(HEADER_INC) $(MLX_INC) -O3
+	MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -L/usr/lib $(MLX_INC) -lXext -lX11 -lm -lz
+else
+#	MacOS
+	MLX_DIR				=	./minilibx-macos
+	MLX					=	$(MLX_DIR)/libmlx.a
+	MLX_INC				=	-I $(MLX_DIR)
+	MLX_OBJ_FLAGS		=	$(MLX_INC) $(HEADER_INC)
+	MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -framework OpenGL -framework AppKit
+
+endif
 
 .PHONY: all
 all:				$(NAME)
@@ -44,10 +58,10 @@ $(OBJS_DIR):
 					mkdir -p $(OBJS_DIR)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(OBJS_DIR) $(MLX)
-					$(CC) $(CFLAGS) $(MLX_INC) $(HEADER_INC) -c $< -o $@
+					$(CC) $(CFLAGS) $(MLX_OBJ_FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS) $(MLX)
-					$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+					$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX):
 					$(MAKE) -C $(MLX_DIR)
