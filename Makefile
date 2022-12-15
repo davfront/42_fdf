@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dapereir <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/14 16:34:45 by dapereir         ###   ########lyon.fr    #
+#    Updated: 2022/12/15 09:52:08 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ HEADER_DIR			=	./includes
 HEADER				=	$(HEADER_DIR)/fdf.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
-MLX_DIR				=	./mlx
+MLX_DIR				=	./minilibx-macos
 MLX					=	$(MLX_DIR)/libmlx.a
 MLX_INC				=	-I $(MLX_DIR)
 MLX_FLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
