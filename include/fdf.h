@@ -16,7 +16,7 @@
 # include <mlx.h>
 
 # define WHITE	0x00FFFFFF
-# define RED		0x00FF0000
+# define RED	0x00FF0000
 
 typedef struct s_data {
 	void	*img;
@@ -26,22 +26,24 @@ typedef struct s_data {
 	int		endian;
 }				t_data;
 
-typedef struct s_rgb {
-	int		r;
-	int		g;
-	int		b;
-}				t_rgb;
+typedef struct s_trgb {
+	int	t;
+	int	r;
+	int	g;
+	int	b;
+}				t_trgb;
 
-typedef struct s_point {
-	unsigned int	x;
-	unsigned int	y;
-}				t_point;
+typedef struct s_pixel {
+	int	x;
+	int	y;
+	int	color;
+}				t_pixel;
 
-t_rgb	fdf_color_rgb(int color);
-int		fdf_color_int(t_rgb c);
+t_trgb	fdf_color_trgb(int color);
+int		fdf_color_by_trgb(t_trgb c);
 int		fdf_color_mix(int color1, int color2, float ratio);
-t_point	fdf_point(unsigned int x, unsigned int y);
-void	fdf_draw_pixel(t_data *data, t_point p, int color);
-void	fdf_draw_line(t_data *data, t_point p1, t_point p2, int color1, int color2);
+t_pixel	fdf_new_pixel(int x, int y, int color);
+void	fdf_draw_pixel(t_data *data, t_pixel p);
+void	fdf_draw_line(t_data *data, t_pixel p1, t_pixel p2);
 
 #endif
