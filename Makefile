@@ -32,10 +32,10 @@ HEADER_DIR			=	./includes
 HEADER				=	$(HEADER_DIR)/fdf.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
-MLX_DIR				=	./mlx
+MLX_DIR				=	./minilibx-macos
 MLX					=	$(MLX_DIR)/libmlx.a
 MLX_INC				=	-I $(MLX_DIR)
-MLX_FLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -framework OpenGL -framework AppKit
 
 .PHONY: all
 all:				$(NAME)
