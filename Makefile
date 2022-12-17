@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/16 00:24:50 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/16 01:44:44 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
 RM					=	rm -rf
 
-SRCS_FILES			=	color.c\
+SRCS_FILES			=	input.c\
+						read.c\
+						color.c\
 						pixel.c\
 						draw.c\
 						fdf.c\
