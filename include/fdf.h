@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 15:08:32 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 15:22:12 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_pixel {
 	int	color;
 }				t_pixel;
 
+typedef struct s_map {
+	int	size_x;
+	int	size_y;
+	int	**values;
+}				t_map;
+
 typedef struct s_img {
 	void	*img;
 	char	*addr;
@@ -48,6 +54,7 @@ typedef struct s_img {
 typedef struct s_fdf {
 	char	*path;
 	char	*title;
+	t_map	map;
 	void	*mlx;
 	void	*win;
 	t_img	img;
