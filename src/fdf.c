@@ -6,32 +6,40 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 09:16:57 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:25:38 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	main(int argc, char** argv)
+void	fdf_draw_frame(t_fdf *fdf)
 {
-	t_fdf	fdf;
-	void	*mlx;
-	void	*mlx_win;
-	t_img	img;
+	fdf_draw_line(&fdf->img, fdf_new_pixel(20, 20, WHITE), fdf_new_pixel(200, 50, RED));
+	fdf_draw_line(&fdf->img, fdf_new_pixel(200, 50, WHITE), fdf_new_pixel(200, 200, RED));
+}
 
-	if (!fdf_get_input(argc, argv, &fdf))
+void	fdf_render_frame(t_fdf *fdf)
+{
+	fdf->img.img = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
+	fdf->img.addr = mlx_get_data_addr(fdf->img.img, &fdf->img.bpp, &fdf->img.len, &fdf->img.endian);
+	fdf_draw_frame(fdf);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
+	mlx_destroy_image(fdf->mlx, fdf->img.img);
+}
+
+int	main(int argc, char **argv)
+{
+	t_fdf	fdf_data;
+	t_fdf	*fdf;
+
+    fdf = &fdf_data;
+	if (!fdf_get_input(argc, argv, fdf))
 		return (1);
-	if (!fdf_read(&fdf))
+	if (!fdf_read(fdf))
 		return (1);
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, fdf.filename);
-	img.img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.len, &img.endian);
-	fdf_draw_line(&img, fdf_new_pixel(20, 20, WHITE), fdf_new_pixel(200, 50, RED));
-	fdf_draw_line(&img, fdf_new_pixel(200, 50, WHITE), fdf_new_pixel(200, 200, RED));
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-
+	fdf->mlx = mlx_init();
+	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
+    fdf_render_frame(fdf);
+	mlx_loop(fdf->mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 09:16:24 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:11:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,13 @@
 # include <mlx.h>
 # include <libft.h>
 # include <fcntl.h>
+# include <math.h>
 
-# define WINDOW_WIDTH	500
-# define WINDOW_HEIGHT	500
+# define WIN_WIDTH		500
+# define WIN_HEIGHT		500
 
-# define WHITE	0x00FFFFFF
-# define RED	0x00FF0000
-
-typedef struct s_fdf {
-	char	*path;
-	char	*filename;
-	char	*extension;
-}				t_fdf;
-
-typedef struct s_img {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		len;
-	int		endian;
-}				t_img;
+# define WHITE			0x00FFFFFF
+# define RED			0x00FF0000
 
 typedef struct s_trgb {
 	int	t;
@@ -49,6 +36,22 @@ typedef struct s_pixel {
 	int	y;
 	int	color;
 }				t_pixel;
+
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		len;
+	int		endian;
+}				t_img;
+
+typedef struct s_fdf {
+	char	*path;
+	char	*title;
+	void	*mlx;
+	void	*win;
+	t_img	img;
+}				t_fdf;
 
 int		fdf_print_msg(char *msg, int cb);
 int		fdf_get_input(int argc, char** argv, t_fdf *fdf);
