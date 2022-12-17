@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 14:11:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 15:08:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_fdf {
 }				t_fdf;
 
 int		fdf_print_msg(char *msg, int cb);
-int		fdf_get_input(int argc, char** argv, t_fdf *fdf);
+int		fdf_get_input(int argc, char **argv, t_fdf *fdf);
 
 int		fdf_read(t_fdf *fdf);
 

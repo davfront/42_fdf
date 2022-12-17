@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/16 08:37:12 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:46:28 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	fdf_parse(int fd)
 
 int	fdf_read(t_fdf *fdf)
 {
-	int fd;
+	int	fd;
 
 	fd = open(fdf->path, O_RDONLY);
 	if (fd == -1)

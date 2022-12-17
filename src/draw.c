@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 14:06:58 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/17 15:05:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	fdf_draw_pixel(t_img *img, t_pixel p)
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2)
 {
 	float	len;
-	float	len_x;
-	float	len_y;
 	float	delta_x;
 	float	delta_y;
 	int		i;
@@ -45,13 +43,10 @@ void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2)
 	if (p1.x == p2.x && p1.y == p2.y)
 	{
 		fdf_draw_pixel(img, p1);
-		return;
+		return ;
 	}
-	len_x = fabs((float)p2.x - (float)p1.x);
-	len_y = fabs((float)p2.y - (float)p1.y);
-	len = len_x;
-	if (len < len_y)
-		len = len_y;
+	len = fabs((float)p2.x - (float)p1.x);
+	len = fmax(len, fabs((float)p2.y - (float)p1.y));
 	delta_x = ((float)p2.x - (float)p1.x) / len;
 	delta_y = ((float)p2.y - (float)p1.y) / len;
 	i = 0;
