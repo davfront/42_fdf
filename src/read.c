@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 23:25:27 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:03:13 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,29 +132,11 @@ int	fdf_get_map_values(t_fdf *fdf)
 
 int	fdf_read(t_fdf *fdf)
 {
-	int	x;
-	int	y;
-
 	if (!fdf_get_map_size(fdf))
 		return (0);
 	if (!fdf_alloc_map_values(fdf))
 		return (0);
 	if (!fdf_get_map_values(fdf))
 		return (0);
-
-	y = 0;
-	while (y < fdf->map.size_y)
-	{
-		x = 0;
-		while (x < fdf->map.size_x)
-		{
-			ft_putnbr_fd(fdf->map.values[x][y], 1);
-			ft_putchar_fd(' ', 1);
-			x++;
-		}
-		ft_putchar_fd('\n', 1);
-		y++;
-	}
-
 	return (1);
 }

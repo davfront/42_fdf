@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 15:22:12 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:48:23 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIN_WIDTH		500
-# define WIN_HEIGHT		500
-
-# define WHITE			0x00FFFFFF
-# define RED			0x00FF0000
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		600
+# define COLOR_TOP		0x00FF0000
+# define COLOR_BOTTOM	0x000000FF
+# define PI				3.14159265
 
 typedef struct s_trgb {
 	int	t;
@@ -36,6 +36,12 @@ typedef struct s_pixel {
 	int	y;
 	int	color;
 }				t_pixel;
+
+typedef struct s_vertice {
+	int	x;
+	int	y;
+	int	z;
+}				t_vertice;
 
 typedef struct s_map {
 	int	size_x;

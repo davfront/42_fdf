@@ -8,4 +8,5 @@ Resource: [Getting a screen on Windows 10 (WSL2)](https://harm-smits.github.io/4
     ```bash
     export DISPLAY=localhost:0.0
     ```
+
 3. Run `./fdf`

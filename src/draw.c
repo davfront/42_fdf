@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 15:05:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:08:42 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	fdf_draw_pixel(t_img *img, t_pixel p)
 {
 	char	*dst;
 
+	if (p.x < 0 || p.x > WIN_WIDTH)
+		return ;
+	if (p.y < 0 || p.y > WIN_HEIGHT)
+		return ;
 	dst = img->addr;
 	dst += p.y * img->len;
 	dst += p.x * (img->bpp / 8);
