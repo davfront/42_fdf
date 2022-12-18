@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/18 01:48:23 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/18 11:09:13 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include <libft.h>
 # include <fcntl.h>
 # include <math.h>
+
+# if defined(__APPLE__)
+#  include <key_macos.h>
+# else
+#  include <key_linux.h>
+# endif
 
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -63,6 +69,11 @@ typedef struct s_fdf {
 	t_map	map;
 	void	*mlx;
 	void	*win;
+	float	h_scale;
+	int		x0;
+	int		y0;
+	float	rx;
+	float	ry;
 	t_img	img;
 }				t_fdf;
 

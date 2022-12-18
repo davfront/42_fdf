@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/18 01:48:27 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/18 11:10:07 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,14 @@ void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 {
 	t_vertice	v;
 	t_vertice	v2;
-	float		x_scale;
-	float		y_scale;
-	float		h_scale;
-	int			x0;
-	int			y0;
 
-	x_scale = (WIN_WIDTH * 0.8 / (fdf->map.size_x - 1));
-	y_scale = (WIN_HEIGHT * 0.8 / (fdf->map.size_y - 1));
-	h_scale = fmin(x_scale, y_scale);
-	x0 = (WIN_WIDTH - (fdf->map.size_x - 1) * h_scale) / 2;
-	y0 = (WIN_HEIGHT - (fdf->map.size_y - 1) * h_scale) / 2;
-
-	v.x = x * h_scale + x0;
-	v.y = y * h_scale + y0;
+	v.x = x * fdf->h_scale;
+	v.y = y * fdf->h_scale;
 	v.z = fdf->map.values[x][y];
+	
+	// translate center of map to origin
+	v.x -= fdf->map.size_x * fdf->h_scale / 2;
+	v.y -= fdf->map.size_y * fdf->h_scale / 2;
 
 	// rotate X by 90deg
 	v2.x = v.x;
@@ -39,19 +32,20 @@ void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 	v = v2;
 
 	// rotate Y by 45deg
-	v2.x = cos(PI / 4) * v.x - sin(PI / 4) * v.z;
+	v2.x = cos(fdf->ry) * v.x - sin(fdf->ry) * v.z;
 	v2.y = v.y;
-	v2.z = sin(PI / 4) * v.x + cos(PI / 4) * v.z;
+	v2.z = sin(fdf->ry) * v.x + cos(fdf->ry) * v.z;
 	v = v2;
 
 	// rotate X by 35deg
 	v2.x = v.x;
-	v2.y = cos(PI / 5) * v.y + sin(PI / 5) * v.z;
-	v2.z = -sin(PI / 5) * v.y + cos(PI / 5) * v.z;
+	v2.y = cos(fdf->rx) * v.y + sin(fdf->rx) * v.z;
+	v2.z = -sin(fdf->rx) * v.y + cos(fdf->rx) * v.z;
 	v = v2;
 
-	// translate
-	v.x += WIN_WIDTH * 0.4;
+	// translate to center of screen
+	v.x += WIN_WIDTH / 2;
+	v.y += WIN_HEIGHT / 2;
 
 	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, fdf->map.values[x][y] / 10);
 	p->x = v.x;
@@ -101,7 +95,7 @@ void	fdf_draw_frame(t_fdf *fdf)
 	}
 }
 
-void	fdf_render_frame(t_fdf *fdf)
+int	fdf_render_frame(t_fdf *fdf)
 {
 	fdf->img.img = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
 	fdf->img.addr = mlx_get_data_addr(fdf->img.img, &fdf->img.bpp, \
@@ -109,6 +103,24 @@ void	fdf_render_frame(t_fdf *fdf)
 	fdf_draw_frame(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_destroy_image(fdf->mlx, fdf->img.img);
+	return (0);
+}
+
+int	fdf_key_hook(int keycode, t_fdf *fdf)
+{
+	// left
+	if (keycode == K_AR_L)
+		fdf->ry -= 0.1;
+	// right
+	if (keycode == K_AR_R)
+		fdf->ry += 0.1;
+	// up
+	if (keycode == K_AR_U)
+		fdf->rx -= 0.1;
+	// down
+	if (keycode == K_AR_D)
+		fdf->rx += 0.1;
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -123,7 +135,8 @@ int	main(int argc, char **argv)
 		return (1);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
-	fdf_render_frame(fdf);
+	mlx_key_hook(fdf->win, fdf_key_hook, fdf);
+	mlx_loop_hook(fdf->mlx, fdf_render_frame, fdf);
 	mlx_loop(fdf->mlx);
 	return (0);
 }
