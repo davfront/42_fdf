@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/18 11:10:07 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:35:14 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,16 @@ int	fdf_render_frame(t_fdf *fdf)
 int	fdf_key_hook(int keycode, t_fdf *fdf)
 {
 	// left
-	if (keycode == K_AR_L)
+	if (keycode == KEY_LEFT)
 		fdf->ry -= 0.1;
 	// right
-	if (keycode == K_AR_R)
+	if (keycode == KEY_RIGHT)
 		fdf->ry += 0.1;
 	// up
-	if (keycode == K_AR_U)
+	if (keycode == KEY_UP)
 		fdf->rx -= 0.1;
 	// down
-	if (keycode == K_AR_D)
+	if (keycode == KEY_DOWN)
 		fdf->rx += 0.1;
 	return (0);
 }
