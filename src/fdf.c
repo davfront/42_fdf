@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 13:35:14 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:09:17 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 {
-	t_vertice	v;
-	t_vertice	v2;
+	t_vector	v;
+	t_vector	v2;
 
 	v.x = x * fdf->h_scale;
 	v.y = y * fdf->h_scale;
@@ -106,8 +106,37 @@ int	fdf_render_frame(t_fdf *fdf)
 	return (0);
 }
 
+int	fdf_free(t_fdf *fdf)
+{
+	if (fdf->map.values) {
+		while (fdf->map.size_x > 0)
+		{
+			if (fdf->map.values[fdf->map.size_x - 1])
+				free(fdf->map.values[fdf->map.size_x - 1]);
+			fdf->map.size_x--;
+		}
+		free(fdf->map.values);
+	}
+	fdf->map.values = NULL;
+	fdf->map.size_x = 0;
+	fdf->map.size_y = 0;
+	return (0);
+}
+
+int	fdf_exit(t_fdf *fdf)
+{
+	fdf_free(fdf);
+	mlx_destroy_window(fdf->mlx, fdf->win);
+	free(fdf->mlx);
+	exit(1);
+	return (0);
+}
+
 int	fdf_key_hook(int keycode, t_fdf *fdf)
 {
+	// esc
+	if (keycode == KEY_ESC)
+		fdf_exit(fdf);
 	// left
 	if (keycode == KEY_LEFT)
 		fdf->ry -= 0.1;
@@ -123,6 +152,15 @@ int	fdf_key_hook(int keycode, t_fdf *fdf)
 	return (0);
 }
 
+void	fdf_hooks(t_fdf *fdf)
+{
+	// when key pressed
+	mlx_key_hook(fdf->win, fdf_key_hook, fdf);
+	
+	// when window closed
+	mlx_hook(fdf->win, 17, 1L<<0, fdf_exit, fdf);
+}
+
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf_data;
@@ -135,7 +173,7 @@ int	main(int argc, char **argv)
 		return (1);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
-	mlx_key_hook(fdf->win, fdf_key_hook, fdf);
+	fdf_hooks(fdf);
 	mlx_loop_hook(fdf->mlx, fdf_render_frame, fdf);
 	mlx_loop(fdf->mlx);
 	return (0);

@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/18 00:45:41 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/19 13:13:38 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ RM					=	rm -rf
 SRCS_FILES			=	input.c\
 						read.c\
 						color.c\
-						draw.c\
+						2d.c\
+						3d.c\
 						fdf.c\
 
 SRCS_DIR			=	./src

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/18 11:09:13 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:49:40 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct s_pixel {
 	int	color;
 }				t_pixel;
 
-typedef struct s_vertice {
+typedef struct s_vector {
 	int	x;
 	int	y;
 	int	z;
-}				t_vertice;
+}				t_vector;
 
 typedef struct s_map {
 	int	size_x;
@@ -90,5 +90,7 @@ t_pixel	fdf_new_pixel(int x, int y, int color);
 
 void	fdf_draw_pixel(t_img *img, t_pixel p);
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
+
+int		fdf_free(t_fdf *fdf);
 
 #endif

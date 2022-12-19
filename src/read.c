@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/18 10:04:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:40:43 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	fdf_alloc_map_values(t_fdf *fdf)
 		fdf->map.values[i] = ft_calloc(fdf->map.size_y, sizeof(int));
 		if (fdf->map.values[i] == NULL)
 		{
-			// TODO: free map
+			fdf_free(fdf);
 			return (fdf_print_msg("ERROR: Malloc failed", 0));
 		}
 		i++;
