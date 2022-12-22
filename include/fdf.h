@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 10:58:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:12:31 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,26 @@ typedef struct s_fdf {
 	t_img	img;
 }				t_fdf;
 
+// print
 int		fdf_print_msg(char *msg, int cb);
+
+// read
 int		fdf_get_input(int argc, char **argv, t_fdf *fdf);
+int		fdf_read_map(t_fdf *fdf);
 
-int		fdf_read(t_fdf *fdf);
-
-t_trgb	fdf_color_trgb(int color);
-int		fdf_color_by_trgb(t_trgb c);
+//color
 int		fdf_color_mix(int color1, int color2, float ratio);
 
-t_pixel	fdf_new_pixel(int x, int y, int color);
-
-void	fdf_draw_pixel(t_img *img, t_pixel p);
+// 2d
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
+void	fdf_set_bg(t_fdf *fdf);
 
+// render
+void	fdf_hooks(t_fdf *fdf);
+int		fdf_render_frame(t_fdf *fdf);
+
+// exit
 int		fdf_free(t_fdf *fdf);
+int		fdf_exit(t_fdf *fdf);
 
 #endif

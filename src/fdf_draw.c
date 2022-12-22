@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2d.c                                               :+:      :+:    :+:   */
+/*   fdf_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 13:14:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:41:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,28 @@ void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2)
 		p.y = p1.y + (int)(i * delta_y);
 		p.color = fdf_color_mix(p1.color, p2.color, (float)i / len);
 		fdf_draw_pixel(img, p);
+		i++;
+	}
+}
+
+void	fdf_set_bg(t_fdf *fdf)
+{
+	int		i;
+	int		j;
+	t_pixel	p;
+
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		j = 0;
+		while (j < WIN_HEIGHT)
+		{
+			p.x = i;
+			p.y = j;
+			p.color = COLOR_BG;
+			fdf_draw_pixel(&fdf->img, p);
+			j++;
+		}
 		i++;
 	}
 }

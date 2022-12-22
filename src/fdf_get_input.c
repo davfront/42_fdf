@@ -1,22 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   fdf_get_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/15 23:31:19 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/17 14:47:55 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 12:17:45 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 12:17:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	fdf_print_msg(char *msg, int cb)
-{
-	ft_putendl_fd(msg, 1);
-	return (cb);
-}
 
 int	fdf_get_input(int argc, char **argv, t_fdf *fdf)
 {

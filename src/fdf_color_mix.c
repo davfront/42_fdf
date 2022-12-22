@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   fdf_color_mix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:26 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/14 16:35:28 by dapereir         ###   ########lyon.fr   */
+/*   Updated: 2022/12/22 12:24:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_trgb	fdf_color_trgb(int color)
+static t_trgb	fdf_color_trgb(int color)
 {
 	t_trgb	c;
 
@@ -23,7 +23,7 @@ t_trgb	fdf_color_trgb(int color)
 	return (c);
 }
 
-int	fdf_color_by_trgb(t_trgb c)
+static int	fdf_color_by_trgb(t_trgb c)
 {
 	int	color;
 
