@@ -6,11 +6,33 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 16:09:17 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 10:50:50 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	fdf_set_bg(t_fdf *fdf)
+{
+	int		i;
+	int 	j;
+	t_pixel	p;
+
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		j = 0;
+		while (j < WIN_HEIGHT)
+		{
+			p.x = i;
+			p.y = j;
+			p.color = COLOR_BG;
+			fdf_draw_pixel(&fdf->img, p);
+			j++;
+		} 
+		i++;
+	} 
+}
 
 void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 {
@@ -81,6 +103,7 @@ void	fdf_draw_frame(t_fdf *fdf)
 	int	x;
 	int	y;
 
+	fdf_set_bg(fdf);
 	x = 0;
 	while (x < fdf->map.size_x)
 	{

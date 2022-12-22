@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 15:49:40 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 10:50:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
+# define COLOR_BG		0x00000000
 # define COLOR_TOP		0x00FF0000
 # define COLOR_BOTTOM	0x000000FF
 # define PI				3.14159265
