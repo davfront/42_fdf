@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 10:50:18 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 10:58:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct s_fdf {
 	t_map	map;
 	void	*mlx;
 	void	*win;
-	float	h_scale;
+	float	zoom;
+	float	z_scale;
 	int		x0;
 	int		y0;
 	float	rx;

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 10:50:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 10:58:30 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 	t_vector	v;
 	t_vector	v2;
 
-	v.x = x * fdf->h_scale;
-	v.y = y * fdf->h_scale;
-	v.z = fdf->map.values[x][y];
+	v.x = x * fdf->zoom;
+	v.y = y * fdf->zoom;
+	v.z = fdf->map.values[x][y] * fdf->z_scale * fdf->zoom;
 	
 	// translate center of map to origin
-	v.x -= fdf->map.size_x * fdf->h_scale / 2;
-	v.y -= fdf->map.size_y * fdf->h_scale / 2;
+	v.x -= fdf->map.size_x * fdf->zoom / 2;
+	v.y -= fdf->map.size_y * fdf->zoom / 2;
 
 	// rotate X by 90deg
 	v2.x = v.x;
@@ -102,7 +102,7 @@ void	fdf_draw_frame(t_fdf *fdf)
 {
 	int	x;
 	int	y;
-
+	
 	fdf_set_bg(fdf);
 	x = 0;
 	while (x < fdf->map.size_x)
