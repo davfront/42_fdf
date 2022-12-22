@@ -6,11 +6,28 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 15:39:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:17:40 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+
+static int	fdf_open_file(char *path)
+{
+	int		fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		fdf_error_exit(NULL);
+	return (fd);
+}
+
+static void	fdf_close_file(int fd)
+{
+	if (close(fd) == -1)
+		fdf_error_exit(NULL);
+}
 
 static int	fdf_count_line_values(char *line)
 {
@@ -40,34 +57,27 @@ static void	fdf_get_map_size(t_fdf *fdf)
 {
 	int		fd;
 	char	*line;
-	int		x_temp;
 	int		x;
-	int		y;
 
-	x = 0;
-	y = 0;
-	fd = open(fdf->path, O_RDONLY);
-	if (fd == -1)
-		fdf_error_exit(NULL);
+	fdf->map.size_x = 0;
+	fdf->map.size_y = 0;
+	fd = fdf_open_file(fdf->path);
 	line = ft_gnl(fd);
 	while (line && *line)
 	{
-		y++;
-		x_temp = fdf_count_line_values(line);
-		if (x_temp < 2 || (y > 1 && x_temp != x))
+		fdf->map.size_y++;
+		x = fdf_count_line_values(line);
+		if (x < 2 || (fdf->map.size_y > 1 && x != fdf->map.size_x))
 			fdf_error_exit("Invalid file content");
-		if (y == 1)
-			x = x_temp;
+		if (fdf->map.size_y == 1)
+			fdf->map.size_x = x;
 		ft_free(line);
 		line = ft_gnl(fd);
 	}
 	ft_free(line);
-	if (y < 2)
+	if (fdf->map.size_y < 2)
 		fdf_error_exit("Invalid file content");
-	fdf->map.size_x = x;
-	fdf->map.size_y = y;
-	if (close(fd) == -1)
-		fdf_error_exit(NULL);
+	fdf_close_file(fd);
 }
 
 static void	fdf_alloc_map_values(t_fdf *fdf)
@@ -90,41 +100,45 @@ static void	fdf_alloc_map_values(t_fdf *fdf)
 	}
 }
 
+static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
+{
+	char	**strs;
+	int		x;
+
+	strs = ft_split(line, ' ');
+	if (!strs)
+	{
+		fdf_reset(fdf);
+		fdf_error_exit(NULL);
+	}
+	x = 0;
+	while (x < fdf->map.size_x)
+	{
+		fdf->map.values[x][y] = ft_atoi(strs[x]);
+		ft_free(strs[x]);
+		x++;
+	}
+	ft_free(strs);
+}
+
 static void	fdf_get_map_values(t_fdf *fdf)
 {
 	int		fd;
 	char	*line;
-	char	**strs;
-	int		x;
 	int		y;
 
-	fd = open(fdf->path, O_RDONLY);
-	if (fd == -1)
-		fdf_error_exit(NULL);
+	fd = fdf_open_file(fdf->path);
 	y = 0;
 	line = ft_gnl(fd);
 	while (line && *line)
 	{
-		strs = ft_split(line, ' ');
-		if (!strs)
-		{
-			fdf_reset(fdf);
-			fdf_error_exit("Split failed");
-		}
-		x = 0;
-		while (x < fdf->map.size_x)
-		{
-			fdf->map.values[x][y] = ft_atoi(strs[x]);
-			x++;
-		}
-		// TODO: free split
+		fdf_get_line_values(fdf, y, line);
 		ft_free(line);
 		line = ft_gnl(fd);
 		y++;
 	}
 	ft_free(line);
-	if (close(fd) == -1)
-		fdf_error_exit(NULL);
+	fdf_close_file(fd);
 }
 
 static void	fdf_init_view(t_fdf *fdf)
