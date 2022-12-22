@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_print_msg.c                                    :+:      :+:    :+:   */
+/*   fdf_error_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 12:16:59 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 13:13:42 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 15:17:19 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_print_msg(char *msg, int cb)
+void	fdf_error_exit(char *msg)
 {
-	ft_putendl_fd(msg, 1);
-	return (cb);
+	ft_putstr_fd("ERROR: ", STDERR);
+	if (msg && *msg)
+		ft_putendl_fd(msg, STDERR);
+	else
+		perror(NULL);
+	exit(EXIT_FAILURE);
 }

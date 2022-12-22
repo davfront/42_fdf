@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/22 13:34:50 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/22 15:33:59 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
 RM					=	rm -rf
 
-SRCS_FILES			=	fdf_print_msg.c\
-						fdf_get_input.c\
+SRCS_FILES			=	fdf_get_input.c\
 						fdf_read_map.c\
 						fdf_color_mix.c\
 						fdf_draw.c\
 						fdf_render_frame.c\
 						fdf_hooks.c\
-						fdf_free.c\
+						fdf_error_exit.c\
+						fdf_reset.c\
 						fdf_exit.c\
 						main.c\
 
