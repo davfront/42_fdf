@@ -10,3 +10,10 @@ Resource: [Getting a screen on Windows 10 (WSL2)](https://harm-smits.github.io/4
     ```
 
 3. Run `./fdf`
+
+## Full command
+
+```bash
+export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
+```
+
