@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/22 15:33:59 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/22 21:08:41 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,33 @@ CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
 RM					=	rm -rf
 
-SRCS_FILES			=	fdf_get_input.c\
-						fdf_read_map.c\
-						fdf_color_mix.c\
-						fdf_draw.c\
-						fdf_render_frame.c\
-						fdf_hooks.c\
-						fdf_error_exit.c\
+SRCS_FILES			=	\
+						utils/fdf_open_file.c\
+						utils/fdf_close_file.c\
+						utils/fdf_error_exit.c\
+						\
+						read/fdf_get_input.c\
+						read/fdf_get_map_size.c\
+						read/fdf_alloc_map_values.c\
+						read/fdf_get_map_values.c\
+						read/fdf_read_map.c\
+						\
+						color/fdf_color_trgb.c\
+						color/fdf_color_by_trgb.c\
+						color/fdf_color_mix.c\
+						\
+						img/fdf_new_pixel.c\
+						img/fdf_draw_pixel.c\
+						img/fdf_draw_line.c\
+						img/fdf_set_bg.c\
+						\
+						viewer/fdf_init_viewer.c\
+						viewer/fdf_hooks.c\
+						viewer/fdf_render_frame.c\
+						\
 						fdf_reset.c\
 						fdf_exit.c\
-						main.c\
+						main.c
 
 SRCS_DIR			=	./src
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

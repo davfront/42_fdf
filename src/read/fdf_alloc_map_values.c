@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_alloc_map_values.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 18:33:12 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+void	fdf_alloc_map_values(t_fdf *fdf)
 {
-	if (fdf->map.values)
+	int	i;
+
+	fdf->map.values = ft_calloc(fdf->map.size_x, sizeof(int *));
+	if (fdf->map.values == NULL)
+		fdf_error_exit(NULL);
+	i = 0;
+	while (i < fdf->map.size_x)
 	{
-		while (fdf->map.size_x > 0)
+		fdf->map.values[i] = ft_calloc(fdf->map.size_y, sizeof(int));
+		if (fdf->map.values[i] == NULL)
 		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
+			fdf_reset(fdf);
+			fdf_error_exit(NULL);
 		}
-		ft_free(fdf->map.values);
+		i++;
 	}
-	fdf->map.size_y = 0;
-	return (0);
 }

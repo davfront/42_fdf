@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 15:33:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 21:07:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +94,33 @@ typedef struct s_fdf {
 	t_img	img;
 }				t_fdf;
 
-// color
-int		fdf_color_mix(int color1, int color2, float ratio);
-
-// draw
-void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
-void	fdf_set_bg(t_fdf *fdf);
+// utils
+int		fdf_open_file(char *path);
+void	fdf_close_file(int fd);
+void	fdf_error_exit(char *msg);
 
 // read
 void	fdf_get_input(int argc, char **argv, t_fdf *fdf);
+void	fdf_get_map_size(t_fdf *fdf);
+void	fdf_alloc_map_values(t_fdf *fdf);
+void	fdf_get_map_values(t_fdf *fdf);
 void	fdf_read_map(t_fdf *fdf);
 
-// render
+// color
+t_trgb	fdf_color_trgb(int color);
+int		fdf_color_by_trgb(t_trgb c);
+int		fdf_color_mix(int color1, int color2, float ratio);
+
+// img
+t_pixel	fdf_new_pixel(int x, int y, int color);
+void	fdf_draw_pixel(t_img *img, t_pixel p);
+void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
+void	fdf_set_bg(t_fdf *fdf);
+
+// viewer
+void	fdf_init_viewer(t_fdf *fdf);
 void	fdf_hooks(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
-
-// error
-void	fdf_error_exit(char *msg);
 
 // exit
 int		fdf_reset(t_fdf *fdf);

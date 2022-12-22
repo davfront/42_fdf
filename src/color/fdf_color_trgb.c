@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_color_trgb.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 18:02:49 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 18:15:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+t_trgb	fdf_color_trgb(int color)
 {
-	if (fdf->map.values)
-	{
-		while (fdf->map.size_x > 0)
-		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
-		}
-		ft_free(fdf->map.values);
-	}
-	fdf->map.size_y = 0;
-	return (0);
+	t_trgb	c;
+
+	c.b = color % 256;
+	c.g = (color / 256) % 256;
+	c.r = (color / 256 / 256) % 256;
+	c.t = color / 256 / 256 / 256;
+	return (c);
 }

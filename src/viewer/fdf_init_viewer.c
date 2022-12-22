@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_init_viewer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 20:58:26 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+void	fdf_init_viewer(t_fdf *fdf)
 {
-	if (fdf->map.values)
-	{
-		while (fdf->map.size_x > 0)
-		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
-		}
-		ft_free(fdf->map.values);
-	}
-	fdf->map.size_y = 0;
-	return (0);
+	float		x_scale;
+	float		y_scale;
+
+	x_scale = (WIN_WIDTH * 0.8 / (fdf->map.size_x - 1));
+	y_scale = (WIN_HEIGHT * 0.8 / (fdf->map.size_y - 1));
+	fdf->zoom = fmin(x_scale, y_scale);
+	fdf->z_scale = 0.2;
+
+	fdf->x0 = (WIN_WIDTH - (fdf->map.size_x - 1) * fdf->zoom) / 2;
+	fdf->y0 = (WIN_HEIGHT - (fdf->map.size_y - 1) * fdf->zoom) / 2;
+
+	fdf->rx = PI / 5;
+	fdf->ry = PI / 4;
 }

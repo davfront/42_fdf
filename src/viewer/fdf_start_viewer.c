@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_start_viewer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 21:03:41 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 21:05:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+void	fdf_start_viewer(t_fdf *fdf)
 {
-	if (fdf->map.values)
-	{
-		while (fdf->map.size_x > 0)
-		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
-		}
-		ft_free(fdf->map.values);
-	}
-	fdf->map.size_y = 0;
-	return (0);
+	fdf->mlx = mlx_init();
+	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
+	fdf_hooks(fdf);
+	mlx_loop_hook(fdf->mlx, fdf_render_frame, fdf);
+	mlx_loop(fdf->mlx);
 }

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_open_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 18:30:14 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+int	fdf_open_file(char *path)
 {
-	if (fdf->map.values)
-	{
-		while (fdf->map.size_x > 0)
-		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
-		}
-		ft_free(fdf->map.values);
-	}
-	fdf->map.size_y = 0;
-	return (0);
+	int		fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		fdf_error_exit(NULL);
+	return (fd);
 }

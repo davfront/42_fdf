@@ -6,33 +6,11 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:26 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 12:24:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 18:03:02 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static t_trgb	fdf_color_trgb(int color)
-{
-	t_trgb	c;
-
-	c.b = color % 256;
-	c.g = (color / 256) % 256;
-	c.r = (color / 256 / 256) % 256;
-	c.t = color / 256 / 256 / 256;
-	return (c);
-}
-
-static int	fdf_color_by_trgb(t_trgb c)
-{
-	int	color;
-
-	color = c.t;
-	color = color * 256 + c.r;
-	color = color * 256 + c.g;
-	color = color * 256 + c.b;
-	return (color);
-}
 
 int	fdf_color_mix(int color1, int color2, float ratio)
 {

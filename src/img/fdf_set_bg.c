@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_reset.c                                        :+:      :+:    :+:   */
+/*   fdf_set_bg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:06:50 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 18:21:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	fdf_reset(t_fdf *fdf)
+void	fdf_set_bg(t_fdf *fdf)
 {
-	if (fdf->map.values)
+	int		i;
+	int		j;
+	t_pixel	p;
+
+	i = 0;
+	while (i < WIN_WIDTH)
 	{
-		while (fdf->map.size_x > 0)
+		j = 0;
+		while (j < WIN_HEIGHT)
 		{
-			ft_free(fdf->map.values[fdf->map.size_x - 1]);
-			fdf->map.size_x--;
+			p.x = i;
+			p.y = j;
+			p.color = COLOR_BG;
+			fdf_draw_pixel(&fdf->img, p);
+			j++;
 		}
-		ft_free(fdf->map.values);
+		i++;
 	}
-	fdf->map.size_y = 0;
-	return (0);
 }
