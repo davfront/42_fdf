@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_print_i.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 11:42:08 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 11:16:37 by dapereir         ###   ########.fr       */
+/*   Created: 2022/11/22 10:57:36 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 11:17:12 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include "libft_char.h"
-# include "libft_mem.h"
-# include "libft_str.h"
-# include "libft_write.h"
-# include "libft_lst.h"
-# include "libft_gnl.h"
-# include "libft_printf.h"
+int	ft_print_i(int i)
+{
+	unsigned int	u;
+	int				is_negative;
+	int				u_len;
 
-#endif
+	is_negative = 0;
+	if (i < 0)
+	{
+		if (ft_print_c('-') < 0)
+			return (-1);
+		is_negative = 1;
+		u = -i;
+	}
+	else
+		u = i;
+	u_len = ft_print_u(u);
+	if (u_len < 0)
+		return (-1);
+	return (is_negative + u_len);
+}

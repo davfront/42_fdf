@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_print_x.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 11:42:08 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 11:16:37 by dapereir         ###   ########.fr       */
+/*   Created: 2022/11/14 01:30:47 by dapereir          #+#    #+#             */
+/*   Updated: 2022/12/22 11:17:12 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include "libft_char.h"
-# include "libft_mem.h"
-# include "libft_str.h"
-# include "libft_write.h"
-# include "libft_lst.h"
-# include "libft_gnl.h"
-# include "libft_printf.h"
+int	ft_print_x(unsigned int x, int is_upper)
+{
+	int		len;
+	char	c;
 
-#endif
+	if (x == 0)
+		return (ft_print_c('0'));
+	len = 0;
+	if (x >= 16)
+	{
+		len = ft_print_x(x / 16, is_upper);
+		if (len < 0)
+			return (-1);
+		x = x % 16;
+	}
+	c = ("0123456789abcdef")[x];
+	if (is_upper)
+		c = ("0123456789ABCDEF")[x];
+	if (ft_print_c(c) < 0)
+		return (-1);
+	return (len + 1);
+}

@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/13 16:37:31 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/22 11:26:10 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,9 +52,13 @@ SRCS			=	char/ft_isalpha.c\
 					str/ft_striteri.c\
 					\
 					write/ft_putchar_fd.c\
+					write/ft_putchar.c\
 					write/ft_putstr_fd.c\
+					write/ft_putstr.c\
 					write/ft_putendl_fd.c\
+					write/ft_putendl.c\
 					write/ft_putnbr_fd.c\
+					write/ft_putnbr.c\
 					\
 					lst/ft_lstnew.c\
 					lst/ft_lstadd_front.c\
@@ -67,6 +71,14 @@ SRCS			=	char/ft_isalpha.c\
 					lst/ft_lstmap.c\
 					\
 					gnl/ft_gnl.c\
+					\
+					printf/ft_print_c.c\
+					printf/ft_print_s.c\
+					printf/ft_print_i.c\
+					printf/ft_print_u.c\
+					printf/ft_print_x.c\
+					printf/ft_print_p.c\
+					printf/ft_printf.c\
 
 OBJS			=	$(SRCS:.c=.o)
 
@@ -93,4 +105,3 @@ fclean:			clean
 .PHONY: re
 re:				fclean
 				$(MAKE) all
-
