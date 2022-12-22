@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 13:53:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 14:13:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ static int	fdf_get_map_size(t_fdf *fdf)
 			return (fdf_print_msg("ERROR: The file content is not valid", 0));
 		if (y == 1)
 			x = x_temp;
-		free(line);
+		ft_free(line);
 		line = ft_gnl(fd);
 	}
-	if (line)
-		free(line);
+	ft_free(line);
 	if (y < 2)
 		return (fdf_print_msg("ERROR: The file content is not valid", 0));
 	fdf->map.size_x = x;
@@ -121,12 +120,11 @@ static int	fdf_get_map_values(t_fdf *fdf)
 			x++;
 		}
 		// TODO: free split
-		free(line);
+		ft_free(line);
 		line = ft_gnl(fd);
 		y++;
 	}
-	if (line)
-		free(line);
+	ft_free(line);
 	if (close(fd) == -1)
 		return (fdf_print_msg("ERROR: Closing the file failed", 0));
 	return (1);

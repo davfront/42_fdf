@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/22 11:26:10 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/22 14:04:43 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS			=	char/ft_isalpha.c\
 					mem/ft_memchr.c\
 					mem/ft_memcmp.c\
 					mem/ft_calloc.c\
+					mem/ft_free.c\
 					\
 					str/ft_strlen.c\
 					str/ft_strlcpy.c\
