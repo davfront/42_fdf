@@ -25,19 +25,7 @@
 #  include <key_linux.h>
 # endif
 
-# ifndef EXIT_SUCCESS
-#  define EXIT_SUCCESS	0
-# endif
-
-# ifndef EXIT_FAILURE
-#  define EXIT_FAILURE	1
-# endif
-
-# ifndef STDERR
-#  define STDERR		2
-# endif
-
-# define WIN_WIDTH		800
+# define WIN_WIDTH		1024
 # define WIN_HEIGHT		600
 
 # define COLOR_BG		0x00000000
