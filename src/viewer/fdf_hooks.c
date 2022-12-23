@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 13:46:30 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:14:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 	if (keycode == KEY_ESC)
 		fdf_exit(fdf);
 	if (keycode == KEY_LEFT)
-		fdf->ry -= 0.1;
+		fdf_matrix_rotate_y_at(fdf->mt, PI / 50, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	if (keycode == KEY_RIGHT)
-		fdf->ry += 0.1;
+		fdf_matrix_rotate_y_at(fdf->mt, -PI / 50, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	if (keycode == KEY_UP)
-		fdf->rx -= 0.1;
+		fdf_matrix_rotate_x_at(fdf->mt, -PI / 50, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	if (keycode == KEY_DOWN)
-		fdf->rx += 0.1;
+		fdf_matrix_rotate_x_at(fdf->mt, PI / 50, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	if (keycode == KEY_R)
+		fdf_init_mt(fdf);
 	return (0);
 }
 

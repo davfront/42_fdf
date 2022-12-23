@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:07:15 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/23 21:23:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ typedef struct s_fdf {
 	t_map	map;
 	void	*mlx;
 	void	*win;
+	t_img	img;
+	float	mt[4][4];
+	float	mp[4][4];
 	float	zoom;
 	float	z_scale;
 	int		x0;
 	int		y0;
 	float	rx;
 	float	ry;
-	t_img	img;
 }				t_fdf;
 
 // utils
@@ -105,10 +107,24 @@ void	fdf_draw_pixel(t_img *img, t_pixel p);
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
 void	fdf_set_bg(t_fdf *fdf);
 
+// matrix
+void	fdf_matrix_copy(float dst[4][4], float src[4][4]);
+void	fdf_matrix_multiply(float m1[4][4], float m2[4][4]);
+void	fdf_matrix_init(float m[4][4]);
+void	fdf_matrix_scale(float m[4][4], float sx, float sy, float sz);
+void	fdf_matrix_translate(float m[4][4], float x, float y);
+void	fdf_matrix_rotate_x(float m[4][4], float rx);
+void	fdf_matrix_rotate_x_at(float m[4][4], float rx, float x, float y);
+void	fdf_matrix_rotate_y(float m[4][4], float ry);
+void	fdf_matrix_rotate_y_at(float m[4][4], float ry, float x, float y);
+void	fdf_matrix_transform_point(float point[4], float matrix[4][4]);
+
 // viewer
 void	fdf_init_viewer(t_fdf *fdf);
+void	fdf_init_mt(t_fdf *fdf);
 void	fdf_hooks(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
+void	fdf_start_viewer(t_fdf *fdf);
 
 // exit
 int		fdf_reset(t_fdf *fdf);

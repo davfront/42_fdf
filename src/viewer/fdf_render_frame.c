@@ -6,51 +6,52 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 13:54:55 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/23 21:37:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
+void	fdf_init_mt(t_fdf *fdf)
 {
-	t_vector	v;
-	t_vector	v2;
-
-	v.x = x * fdf->zoom;
-	v.y = y * fdf->zoom;
-	v.z = fdf->map.values[x][y] * fdf->z_scale * fdf->zoom;
-
+	fdf_matrix_init(fdf->mt);
+	
 	// translate center of map to origin
-	v.x -= fdf->map.size_x * fdf->zoom / 2;
-	v.y -= fdf->map.size_y * fdf->zoom / 2;
+	fdf_matrix_translate(fdf->mt, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
+
+	// scale
+	fdf_matrix_scale(fdf->mt, fdf->zoom, fdf->zoom, fdf->z_scale * fdf->zoom);
 
 	// rotate X by 90deg
-	v2.x = v.x;
-	v2.y = -v.z;
-	v2.z = v.y;
-	v = v2;
+	fdf_matrix_rotate_x(fdf->mt, - PI / 2);
 
 	// rotate Y by 45deg
-	v2.x = cos(fdf->ry) * v.x - sin(fdf->ry) * v.z;
-	v2.y = v.y;
-	v2.z = sin(fdf->ry) * v.x + cos(fdf->ry) * v.z;
-	v = v2;
+	fdf_matrix_rotate_y(fdf->mt, PI / 4);
 
 	// rotate X by 35deg
-	v2.x = v.x;
-	v2.y = cos(fdf->rx) * v.y + sin(fdf->rx) * v.z;
-	v2.z = -sin(fdf->rx) * v.y + cos(fdf->rx) * v.z;
-	v = v2;
+	fdf_matrix_rotate_x(fdf->mt, PI / 5);
 
 	// translate to center of screen
-	v.x += WIN_WIDTH / 2;
-	v.y += WIN_HEIGHT / 2;
+	fdf_matrix_translate(fdf->mt, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 
+}
+
+static void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
+{
+	float	v[4] = {x, y, fdf->map.values[x][y] / 10, 1.0};
+	float	m[4][4];
+	// float	z_cam = 800.0;
+
+	fdf_matrix_init(m);
+	fdf_matrix_multiply(m, fdf->mt);
+	fdf_matrix_transform_point(v, m);
+	
+	p->x = v[0];
+	p->y = v[1];
+	// p->x = WIN_WIDTH / 2 + (v[0] - WIN_WIDTH / 2) / (1 - v[2] / z_cam);
+	// p->y = WIN_HEIGHT / 2 + (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / z_cam);
 	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, \
 		fdf->map.values[x][y] / 10);
-	p->x = v.x;
-	p->y = v.y;
 }
 
 static void	fdf_draw_x_edge(t_fdf *fdf, int x, int y)

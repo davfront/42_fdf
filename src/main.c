@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:55:19 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 21:09:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:11:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	main(int argc, char **argv)
 	fdf = &fdf_data;
 	fdf_get_input(argc, argv, fdf);
 	fdf_read_map(fdf);
-	fdf_init_viewer(fdf);
+	fdf_start_viewer(fdf);
 	return (EXIT_SUCCESS);
 }
