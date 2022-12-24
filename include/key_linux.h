@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 11:06:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 13:34:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:33:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@
 # define KEY_X	120
 # define KEY_Y	121
 # define KEY_Z	122
+
+// NUMBERS
+
+# define KEY_0	48
+# define KEY_1	49
+# define KEY_2	50
+# define KEY_3	51
+# define KEY_4	52
+# define KEY_5	53
+# define KEY_6	54
+# define KEY_7	55
+# define KEY_8	56
+# define KEY_9	57
 
 // ARROWS
 

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 09:04:57 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:41:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	fdf_matrix_transform_point(float point[4], float matrix[4][4]);
 
 // viewer
 void	fdf_init_viewer(t_fdf *fdf);
-void	fdf_init_mt(t_fdf *fdf);
+void	fdf_init_mt(t_fdf *fdf, int view);
 void	fdf_hooks(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
 void	fdf_start_viewer(t_fdf *fdf);

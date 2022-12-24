@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 08:56:35 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:41:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 	cy = WIN_HEIGHT / 2;
 	if (keycode == KEY_ESC)
 		fdf_exit(fdf);
+	if (keycode == KEY_0)
+		fdf_init_mt(fdf, 0);
+	if (keycode == KEY_1)
+		fdf_init_mt(fdf, 1);
+	if (keycode == KEY_2)
+		fdf_init_mt(fdf, 2);
+	if (keycode == KEY_3)
+		fdf_init_mt(fdf, 3);
+	if (keycode == KEY_P)
+		fdf->opt.perspective = !fdf->opt.perspective;
 	if (keycode == KEY_LEFT)
 		fdf_matrix_rotate_y_at(fdf->mt, a, cx, cy);
 	if (keycode == KEY_RIGHT)
@@ -31,10 +41,6 @@ static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 		fdf_matrix_rotate_x_at(fdf->mt, -a, cx, cy);
 	if (keycode == KEY_DOWN)
 		fdf_matrix_rotate_x_at(fdf->mt, a, cx, cy);
-	if (keycode == KEY_R)
-		fdf_init_mt(fdf);
-	if (keycode == KEY_P)
-		fdf->opt.perspective = !fdf->opt.perspective;
 	return (0);
 }
 
