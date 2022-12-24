@@ -17,3 +17,16 @@ Resource: [Getting a screen on Windows 10 (WSL2)](https://harm-smits.github.io/4
 export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 ```
 
+## Features
+
+- [x] Isometric view
+- [x] Perspective view
+- [x] Other views (top, sides)
+- [x] Rotate
+- [ ] Scale
+- [ ] Translate
+- [ ] Map colors
+- [ ] Themes
+- [ ] Help
+- [ ] Solid rendering
+- [ ] Navigate with mouse
