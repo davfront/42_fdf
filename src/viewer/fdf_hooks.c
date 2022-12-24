@@ -6,21 +6,35 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 09:41:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:53:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void	fdf_on_zoom(t_fdf *fdf, float zoom)
+{
+	float	cx;
+	float	cy;
+
+	cx = WIN_WIDTH / 2;
+	cy = WIN_HEIGHT / 2;
+	fdf_matrix_translate(fdf->mt, -cx, -cy);
+	fdf_matrix_scale(fdf->mt, zoom, zoom, zoom);
+	fdf_matrix_translate(fdf->mt, cx, cy);
+}
 
 static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 {
 	float	a;
 	float	cx;
 	float	cy;
+	float	zoom;
 
 	a = PI / 50;
 	cx = WIN_WIDTH / 2;
 	cy = WIN_HEIGHT / 2;
+	zoom = 1.1;
 	if (keycode == KEY_ESC)
 		fdf_exit(fdf);
 	if (keycode == KEY_0)
@@ -41,6 +55,10 @@ static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 		fdf_matrix_rotate_x_at(fdf->mt, -a, cx, cy);
 	if (keycode == KEY_DOWN)
 		fdf_matrix_rotate_x_at(fdf->mt, a, cx, cy);
+	if (keycode == KEY_PLUS)
+		fdf_on_zoom(fdf, zoom);
+	if (keycode == KEY_MINUS)
+		fdf_on_zoom(fdf, 1 / zoom);
 	return (0);
 }
 

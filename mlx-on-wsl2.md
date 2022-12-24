@@ -23,7 +23,7 @@ export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 - [x] Perspective view
 - [x] Other views (top, sides)
 - [x] Rotate
-- [ ] Scale
+- [x] Scale
 - [ ] Translate
 - [ ] Map colors
 - [ ] Themes

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 11:06:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 09:33:21 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:27:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@
 
 // MISC
 
+# define KEY_PLUS	61
+# define KEY_MINUS	45
 # define KEY_SPACE	32
 # define KEY_ESC	65307
 
