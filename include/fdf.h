@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/23 21:23:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:04:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ typedef struct s_img {
 	int		endian;
 }				t_img;
 
+typedef struct s_opt {
+	int		perspective;
+}				t_opt;
+
 typedef struct s_fdf {
 	char	*path;
 	char	*title;
@@ -75,13 +79,7 @@ typedef struct s_fdf {
 	void	*win;
 	t_img	img;
 	float	mt[4][4];
-	float	mp[4][4];
-	float	zoom;
-	float	z_scale;
-	int		x0;
-	int		y0;
-	float	rx;
-	float	ry;
+	t_opt	opt;
 }				t_fdf;
 
 // utils

@@ -6,50 +6,36 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/23 21:37:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:11:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fdf_init_mt(t_fdf *fdf)
-{
-	fdf_matrix_init(fdf->mt);
-	
-	// translate center of map to origin
-	fdf_matrix_translate(fdf->mt, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
-
-	// scale
-	fdf_matrix_scale(fdf->mt, fdf->zoom, fdf->zoom, fdf->z_scale * fdf->zoom);
-
-	// rotate X by 90deg
-	fdf_matrix_rotate_x(fdf->mt, - PI / 2);
-
-	// rotate Y by 45deg
-	fdf_matrix_rotate_y(fdf->mt, PI / 4);
-
-	// rotate X by 35deg
-	fdf_matrix_rotate_x(fdf->mt, PI / 5);
-
-	// translate to center of screen
-	fdf_matrix_translate(fdf->mt, WIN_WIDTH / 2, WIN_HEIGHT / 2);
-
-}
-
 static void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 {
-	float	v[4] = {x, y, fdf->map.values[x][y] / 10, 1.0};
 	float	m[4][4];
-	// float	z_cam = 800.0;
+	float	v[4];
+	float	z_cam;
 
+	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
+	v[0] = x;
+	v[1] = y;
+	v[2] = fdf->map.values[x][y] / 10;
+	v[3] = 1.0;
 	fdf_matrix_init(m);
 	fdf_matrix_multiply(m, fdf->mt);
 	fdf_matrix_transform_point(v, m);
-	
-	p->x = v[0];
-	p->y = v[1];
-	// p->x = WIN_WIDTH / 2 + (v[0] - WIN_WIDTH / 2) / (1 - v[2] / z_cam);
-	// p->y = WIN_HEIGHT / 2 + (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / z_cam);
+	if (fdf->opt.perspective)
+	{
+		p->x = WIN_WIDTH / 2 + (v[0] - WIN_WIDTH / 2) / (1 - v[2] / z_cam);
+		p->y = WIN_HEIGHT / 2 + (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / z_cam);
+	}
+	else
+	{
+		p->x = v[0];
+		p->y = v[1];
+	}
 	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, \
 		fdf->map.values[x][y] / 10);
 }
