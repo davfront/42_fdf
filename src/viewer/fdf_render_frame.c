@@ -6,17 +6,18 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 09:11:11 by dapereir         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:22:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
+void	fdf_project_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 {
 	float	m[4][4];
 	float	v[4];
 	float	z_cam;
+	float	r;
 
 	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
 	v[0] = x;
@@ -36,52 +37,86 @@ static void	fdf_map_to_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 		p->x = v[0];
 		p->y = v[1];
 	}
-	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, \
-		fdf->map.values[x][y] / 10);
+	r = 0;
+	if (fdf->map.z_max != fdf->map.z_min)
+	r = fabs((float)(fdf->map.values[x][y] - fdf->map.z_min) / (float)(fdf->map.z_max - fdf->map.z_min));
+	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, r);
 }
 
-static void	fdf_draw_x_edge(t_fdf *fdf, int x, int y)
-{
-	t_pixel	p1;
-	t_pixel	p2;
-
-	if (x < 0 || x > fdf->map.size_x - 2)
-		return ;
-	fdf_map_to_pixel(fdf, x, y, &p1);
-	fdf_map_to_pixel(fdf, x + 1, y, &p2);
-	fdf_draw_line(&fdf->img, p1, p2);
-}
-
-static void	fdf_draw_y_edge(t_fdf *fdf, int x, int y)
-{
-	t_pixel	p1;
-	t_pixel	p2;
-
-	if (y < 0 || y > fdf->map.size_y - 2)
-		return ;
-	fdf_map_to_pixel(fdf, x, y, &p1);
-	fdf_map_to_pixel(fdf, x, y + 1, &p2);
-	fdf_draw_line(&fdf->img, p1, p2);
-}
-
-static void	fdf_draw_frame(t_fdf *fdf)
+void	fdf_project_map(t_fdf *fdf)
 {
 	int	x;
 	int	y;
 
-	fdf_set_bg(fdf);
 	x = 0;
 	while (x < fdf->map.size_x)
 	{
 		y = 0;
 		while (y < fdf->map.size_y)
 		{
-			fdf_draw_x_edge(fdf, x, y);
-			fdf_draw_y_edge(fdf, x, y);
+			fdf_project_pixel(fdf, x, y, &fdf->proj[x][y]);
 			y++;
 		}
 		x++;
 	}
+}
+
+void	fdf_alloc_projection(t_fdf *fdf)
+{
+	int	x;
+
+	fdf->proj = ft_calloc(fdf->map.size_x, sizeof(t_pixel *));
+	if (fdf->proj == NULL)
+		fdf_error_exit(NULL);
+	x = 0;
+	while (x < fdf->map.size_x)
+	{
+		fdf->proj[x] = ft_calloc(fdf->map.size_y, sizeof(t_pixel));
+		if (fdf->proj[x] == NULL)
+		{
+			// TODO FREE
+			fdf_error_exit(NULL);
+		}
+		x++;
+	}
+}
+
+void	fdf_free_projection(t_fdf *fdf)
+{
+	int	x;
+
+	x = 0;
+	while (x < fdf->map.size_x)
+	{
+		ft_free(fdf->proj[x]);
+		x++;
+	}
+	ft_free(fdf->proj);
+}
+
+void	fdf_draw_frame(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+
+	fdf_set_bg(fdf);
+	fdf_alloc_projection(fdf);
+	fdf_project_map(fdf);
+	x = 0;
+	while (x < fdf->map.size_x)
+	{
+		y = 0;
+		while (y < fdf->map.size_y)
+		{
+			if (x < fdf->map.size_x - 1)
+				fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y]);
+			if (y < fdf->map.size_y - 1)
+				fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x][y + 1]);
+			y++;
+		}
+		x++;
+	}
+	fdf_free_projection(fdf);
 }
 
 int	fdf_render_frame(t_fdf *fdf)

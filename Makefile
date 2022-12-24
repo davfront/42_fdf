@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2022/12/23 21:25:46 by dapereir         ###   ########.fr        #
+#    Updated: 2022/12/24 15:38:04 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS_FILES			=	\
 						read/fdf_get_map_size.c\
 						read/fdf_alloc_map_values.c\
 						read/fdf_get_map_values.c\
+						read/fdf_get_map_zminmax.c\
 						read/fdf_read_map.c\
 						\
 						color/fdf_color_trgb.c\
