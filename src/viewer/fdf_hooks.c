@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 10:53:09 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/02 09:26:00 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	fdf_on_keypress(int keycode, t_fdf *fdf)
 		fdf_init_mt(fdf, 3);
 	if (keycode == KEY_P)
 		fdf->opt.perspective = !fdf->opt.perspective;
+	if (keycode == KEY_H)
+		fdf->opt.help = !fdf->opt.help;
 	if (keycode == KEY_LEFT)
 		fdf_matrix_rotate_y_at(fdf->mt, a, cx, cy);
 	if (keycode == KEY_RIGHT)

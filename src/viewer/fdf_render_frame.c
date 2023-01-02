@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 16:22:22 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/02 09:29:25 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,11 @@ void	fdf_free_projection(t_fdf *fdf)
 	ft_free(fdf->proj);
 }
 
-void	fdf_draw_frame(t_fdf *fdf)
+void	fdf_draw_map(t_fdf *fdf)
 {
 	int	x;
 	int	y;
 
-	fdf_set_bg(fdf);
 	fdf_alloc_projection(fdf);
 	fdf_project_map(fdf);
 	x = 0;
@@ -119,12 +118,40 @@ void	fdf_draw_frame(t_fdf *fdf)
 	fdf_free_projection(fdf);
 }
 
+void	fdf_draw_text(t_fdf *fdf, int line, char *text)
+{
+	mlx_string_put(fdf->mlx, fdf->win, 20, 20 + 20 * line, COLOR_TXT, text);
+}
+
+void	fdf_draw_help(t_fdf *fdf)
+{
+	int line;
+
+	line = 1;
+	fdf_draw_text(fdf, line++, "[H] Show / hide help");
+	if (fdf->opt.help)
+	{
+		line++;
+		fdf_draw_text(fdf, line++, "[0] Isometric view");
+		fdf_draw_text(fdf, line++, "[1] Z-axis view");
+		fdf_draw_text(fdf, line++, "[2] X-axis view");
+		fdf_draw_text(fdf, line++, "[3] Y-axis view");
+		line++;
+		fdf_draw_text(fdf, line++, "[P] Toggle perspective");
+		line++;
+		fdf_draw_text(fdf, line++, "[+] Zoom up");
+		fdf_draw_text(fdf, line++, "[-] Zoom down");
+	}
+}
+
 int	fdf_render_frame(t_fdf *fdf)
 {
 	fdf->img.img = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
 	fdf->img.addr = mlx_get_data_addr(fdf->img.img, &fdf->img.bpp, \
 		&fdf->img.len, &fdf->img.endian);
-	fdf_draw_frame(fdf);
+	// fdf_set_bg(fdf);
+	fdf_draw_map(fdf);
+	fdf_draw_help(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_destroy_image(fdf->mlx, fdf->img.img);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 09:50:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/02 09:24:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	fdf_init_mt(t_fdf *fdf, int view)
 void	fdf_init_viewer(t_fdf *fdf)
 {
 	fdf->opt.perspective = 0;
+	fdf->opt.help = 0;
 	fdf_init_mt(fdf, 0);
 }

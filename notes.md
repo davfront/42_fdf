@@ -27,6 +27,6 @@ export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 - [ ] Translate
 - [ ] Map colors
 - [ ] Themes
-- [ ] Help
+- [x] Help
 - [ ] Solid rendering
 - [ ] Navigate with mouse

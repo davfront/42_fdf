@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 15:36:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/02 09:24:38 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define WIN_HEIGHT		600
 
 # define COLOR_BG		0x00000000
+# define COLOR_TXT		0x00FFFFFF
 # define COLOR_TOP		0x00FF0000
 # define COLOR_BOTTOM	0x000000FF
 
@@ -71,6 +72,7 @@ typedef struct s_img {
 
 typedef struct s_opt {
 	int		perspective;
+	int		help;
 }				t_opt;
 
 typedef struct s_fdf {
