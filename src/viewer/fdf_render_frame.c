@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/02 09:29:25 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:57:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,21 @@ void	fdf_draw_map(t_fdf *fdf)
 		y = 0;
 		while (y < fdf->map.size_y)
 		{
-			if (x < fdf->map.size_x - 1)
-				fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y]);
-			if (y < fdf->map.size_y - 1)
-				fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x][y + 1]);
+			if (fdf->opt.solid)
+			{
+				if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
+				{
+					fdf_draw_triangle(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y], fdf->proj[x][y + 1]);
+					fdf_draw_triangle(&fdf->img, fdf->proj[x + 1][y], fdf->proj[x][y + 1], fdf->proj[x + 1][y + 1]);
+				}
+			}
+			else
+			{
+				if (x < fdf->map.size_x - 1)
+					fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y]);
+				if (y < fdf->map.size_y - 1)
+					fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x][y + 1]);
+			}
 			y++;
 		}
 		x++;
@@ -128,20 +139,23 @@ void	fdf_draw_help(t_fdf *fdf)
 	int line;
 
 	line = 1;
-	fdf_draw_text(fdf, line++, "[H] Show / hide help");
-	if (fdf->opt.help)
-	{
-		line++;
-		fdf_draw_text(fdf, line++, "[0] Isometric view");
-		fdf_draw_text(fdf, line++, "[1] Z-axis view");
-		fdf_draw_text(fdf, line++, "[2] X-axis view");
-		fdf_draw_text(fdf, line++, "[3] Y-axis view");
-		line++;
-		fdf_draw_text(fdf, line++, "[P] Toggle perspective");
-		line++;
-		fdf_draw_text(fdf, line++, "[+] Zoom up");
-		fdf_draw_text(fdf, line++, "[-] Zoom down");
-	}
+	fdf_draw_text(fdf, line++, "[H] Help");
+	if (!fdf->opt.help)
+		return ;
+	line++;
+	fdf_draw_text(fdf, line++, "[0] Isometric view");
+	fdf_draw_text(fdf, line++, "[1] Z-axis view");
+	fdf_draw_text(fdf, line++, "[2] X-axis view");
+	fdf_draw_text(fdf, line++, "[3] Y-axis view");
+	line++;
+	fdf_draw_text(fdf, line++, "[P] Projection mode (Orthogonal <-> Perspective)");
+	fdf_draw_text(fdf, line++, "[R] Rendering mode (Wireframe <-> Solid)");
+	line++;
+	fdf_draw_text(fdf, line++, "[+] Zoom in");
+	fdf_draw_text(fdf, line++, "[-] Zoom out");
+	line++;
+	fdf_draw_text(fdf, line++, ft_itoa(fdf->opt.mouse.x));
+	fdf_draw_text(fdf, line++, ft_itoa(fdf->opt.mouse.y));
 }
 
 int	fdf_render_frame(t_fdf *fdf)
