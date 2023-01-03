@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/03 11:42:00 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/03 12:54:04 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS_FILES			=	\
 						\
 						viewer/fdf_init_viewer.c\
 						viewer/fdf_hooks.c\
+						viewer/fdf_draw_help.c\
 						viewer/fdf_render_frame.c\
 						viewer/fdf_start_viewer.c\
 						\
