@@ -6,101 +6,63 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:47:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 11:39:17 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:04:25 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	fdf_draw_triangle_bottom(t_img *img, t_triangle t)
+static void	fdf_draw_triangle_pixel(t_img *img, t_pixel t[3], t_pixel p)
 {
-	float	len;
-	t_pixel	p1;
-	t_pixel	p2;
-	int		i;
+	float	w1;
+	float	w2;
+	float	w3;
 
-	if (t.top.y != t.mid.y || t.top.y == t.bot.y)
-		return ;
-	len = (float)t.top.y - (float)t.bot.y;
-	i = 0;
-	while (i <= len)
+	w1 = (float)((p.y - t[1].y) * (t[2].x - t[1].x) \
+			- (p.x - t[1].x) * (t[2].y - t[1].y)) \
+		/ ((t[0].y - t[1].y) * (t[2].x - t[1].x) \
+			- (t[0].x - t[1].x) * (t[2].y - t[1].y));
+	w2 = (float)((p.y - t[0].y) * (t[2].x - t[0].x) \
+			- (p.x - t[0].x) * (t[2].y - t[0].y)) \
+		/ ((t[1].y - t[0].y) * (t[2].x - t[0].x) \
+			- (t[1].x - t[0].x) * (t[2].y - t[0].y));
+	w3 = 1.0 - w1 - w2;
+	if (w1 >= 0 && w2 >= 0 && w3 >= 0)
 	{
-		p1.x = t.bot.x + (int)(i * (t.top.x - t.bot.x) / len);
-		p1.y = t.bot.y + i;
-		p1.color = fdf_color_mix(t.bot.color, t.top.color, (float)i / len);
-		p2.x = t.bot.x + (int)(i * (t.mid.x - t.bot.x) / len);
-		p2.y = t.bot.y + i;
-		p2.color = fdf_color_mix(t.bot.color, t.mid.color, (float)i / len);
-		fdf_draw_line(img, p1, p2);
-		i++;
+		if (w1 + w2 == 0)
+			p.color = t[2].color;
+		else
+		{
+			p.color = fdf_color_mix(t[0].color, t[1].color, w2 / (w1 + w2));
+			p.color = fdf_color_mix(p.color, t[2].color, w3);
+		}
+		fdf_draw_pixel(img, p);
 	}
-}
-
-static void	fdf_draw_triangle_top(t_img *img, t_triangle t)
-{
-	float	len;
-	t_pixel	p1;
-	t_pixel	p2;
-	int		i;
-
-	if (t.bot.y != t.mid.y || t.bot.y == t.top.y)
-		return ;
-	len = (float)t.top.y - (float)t.bot.y;
-	i = 0;
-	while (i <= len)
-	{
-		p1.x = t.top.x - (int)(i * (t.top.x - t.bot.x) / len);
-		p1.y = t.top.y - i;
-		p1.color = fdf_color_mix(t.top.color, t.bot.color, (float)i / len);
-		p2.x = t.top.x - (int)(i * (t.top.x - t.mid.x) / len);
-		p2.y = t.top.y - i;
-		p2.color = fdf_color_mix(t.top.color, t.mid.color, (float)i / len);
-		fdf_draw_line(img, p1, p2);
-		i++;
-	}
-}
-
-static void	fdf_sort_pixels_by_y_asc(t_pixel *p1, t_pixel *p2, t_pixel *p3)
-{
-	if (p1->y > p2->y)
-		fdf_swap_pixels(p1, p2);
-	if (p1->y > p3->y)
-		fdf_swap_pixels(p1, p3);
-	if (p2->y > p3->y)
-		fdf_swap_pixels(p2, p3);
-}
-
-static t_triangle	fdf_new_triangle(t_pixel p1, t_pixel p2, t_pixel p3)
-{
-	t_triangle	triangle;
-
-	fdf_sort_pixels_by_y_asc(&p1, &p2, &p3);
-	triangle.bot = p1;
-	triangle.mid = p2;
-	triangle.top = p3;
-	return (triangle);
 }
 
 void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3)
 {
-	t_triangle	t;
-	t_pixel		p4;
-	float		ratio;
+	t_pixel	min;
+	t_pixel	max;
+	t_pixel	t[3];
+	t_pixel	p;
 
-	t = fdf_new_triangle(p1, p2, p3);
-	if (t.bot.y == t.top.y)
-		return ;
-	if (t.mid.y == t.top.y)
-		fdf_draw_triangle_bottom(img, t);
-	else if (t.bot.y == t.mid.y)
-		fdf_draw_triangle_top(img, t);
-	else
+	min.x = fmin(p1.x, fmin(p2.x, p3.x));
+	max.x = fmax(p1.x, fmax(p2.x, p3.x));
+	min.y = fmin(p1.y, fmin(p2.y, p3.y));
+	max.y = fmax(p1.y, fmax(p2.y, p3.y));
+	p.x = min.x;
+	while (p.x <= max.x)
 	{
-		ratio = (float)(t.mid.y - t.bot.y) / (float)(t.top.y - t.bot.y);
-		p4.x = (int)(t.bot.x + ratio * (t.top.x - t.bot.x));
-		p4.y = t.mid.y;
-		p4.color = fdf_color_mix(t.bot.color, t.top.color, ratio);
-		fdf_draw_triangle_bottom(img, fdf_new_triangle(t.bot, t.mid, p4));
-		fdf_draw_triangle_top(img, fdf_new_triangle(t.mid, p4, t.top));
+		p.y = min.y;
+		while (p.y <= max.y)
+		{
+			t[0] = p1;
+			t[1] = p2;
+			t[2] = p3;
+			fdf_draw_triangle_pixel(img, t, p);
+			p.y++;
+		}
+		p.x++;
 	}
 }
