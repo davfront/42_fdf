@@ -6,13 +6,13 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 10:57:34 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/03 13:30:25 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fdf_project_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
+void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 {
 	float	m[4][4];
 	float	v[4];
@@ -31,14 +31,14 @@ void	fdf_project_pixel(t_fdf *fdf, int x, int y, t_pixel *p)
 	{
 		p->x = WIN_WIDTH / 2 + (v[0] - WIN_WIDTH / 2) / (1 - v[2] / z_cam);
 		p->y = WIN_HEIGHT / 2 + (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / z_cam);
+		p->z = v[2] - z_cam;
 	}
 	else
 	{
 		p->x = v[0];
 		p->y = v[1];
+		p->z = v[2];
 	}
-	r = 0;
-	if (fdf->map.z_max != fdf->map.z_min)
 	r = fabs((float)(fdf->map.values[x][y] - fdf->map.z_min) / (float)(fdf->map.z_max - fdf->map.z_min));
 	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, r);
 }
@@ -54,7 +54,7 @@ void	fdf_project_map(t_fdf *fdf)
 		y = 0;
 		while (y < fdf->map.size_y)
 		{
-			fdf_project_pixel(fdf, x, y, &fdf->proj[x][y]);
+			fdf_project_point(fdf, x, y, &fdf->proj[x][y]);
 			y++;
 		}
 		x++;
@@ -65,13 +65,13 @@ void	fdf_alloc_projection(t_fdf *fdf)
 {
 	int	x;
 
-	fdf->proj = ft_calloc(fdf->map.size_x, sizeof(t_pixel *));
+	fdf->proj = ft_calloc(fdf->map.size_x, sizeof(t_vertice *));
 	if (fdf->proj == NULL)
 		fdf_error_exit(NULL);
 	x = 0;
 	while (x < fdf->map.size_x)
 	{
-		fdf->proj[x] = ft_calloc(fdf->map.size_y, sizeof(t_pixel));
+		fdf->proj[x] = ft_calloc(fdf->map.size_y, sizeof(t_vertice));
 		if (fdf->proj[x] == NULL)
 		{
 			// TODO FREE
@@ -94,37 +94,53 @@ void	fdf_free_projection(t_fdf *fdf)
 	ft_free(fdf->proj);
 }
 
+static t_pixel	fdf_proj_px(t_fdf *fdf, int x, int y)
+{
+	t_pixel		p;
+	t_vertice	v;
+
+	v = fdf->proj[x][y];
+	p.x = v.x;
+	p.y = v.y;
+	p.color = v.color;
+	return (p);
+}
+
 void	fdf_draw_map(t_fdf *fdf)
 {
 	int	x;
 	int	y;
+	int	x_rev;
+	int	y_rev;
 
 	fdf_alloc_projection(fdf);
 	fdf_project_map(fdf);
-	x = 0;
-	while (x < fdf->map.size_x)
+	x_rev = (fdf->proj[1][0].z < fdf->proj[0][0].z);
+	y_rev = (fdf->proj[0][1].z < fdf->proj[0][0].z);
+	x = 0 + x_rev * (fdf->map.size_x - 1);
+	while (x <= fdf->map.size_x - 1 && x >= 0)
 	{
-		y = 0;
-		while (y < fdf->map.size_y)
+		y = 0 + y_rev * (fdf->map.size_y - 1);
+		while (y <= fdf->map.size_y - 1 && y >= 0)
 		{
 			if (fdf->opt.solid)
 			{
 				if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
 				{
-					fdf_draw_triangle(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y], fdf->proj[x][y + 1]);
-					fdf_draw_triangle(&fdf->img, fdf->proj[x + 1][y], fdf->proj[x][y + 1], fdf->proj[x + 1][y + 1]);
+					fdf_draw_triangle(&fdf->img, fdf_proj_px(fdf, x, y), fdf_proj_px(fdf, x + 1, y), fdf_proj_px(fdf, x, y + 1));
+					fdf_draw_triangle(&fdf->img, fdf_proj_px(fdf, x + 1, y), fdf_proj_px(fdf, x, y + 1), fdf_proj_px(fdf, x + 1, y + 1));
 				}
 			}
 			else
 			{
 				if (x < fdf->map.size_x - 1)
-					fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x + 1][y]);
+					fdf_draw_line(&fdf->img, fdf_proj_px(fdf, x, y), fdf_proj_px(fdf, x + 1, y));
 				if (y < fdf->map.size_y - 1)
-					fdf_draw_line(&fdf->img, fdf->proj[x][y], fdf->proj[x][y + 1]);
+					fdf_draw_line(&fdf->img, fdf_proj_px(fdf, x, y), fdf_proj_px(fdf, x, y + 1));
 			}
-			y++;
+			y += 1 - 2 * y_rev;
 		}
-		x++;
+		x += 1 - 2 * x_rev;
 	}
 	fdf_free_projection(fdf);
 }
