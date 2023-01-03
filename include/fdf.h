@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 10:40:26 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:42:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct s_pixel {
 	int	y;
 	int	color;
 }				t_pixel;
+
+typedef struct s_triangle {
+	t_pixel	bot;
+	t_pixel	mid;
+	t_pixel	top;
+}				t_triangle;
 
 typedef struct s_vector {
 	int	x;
@@ -108,6 +114,7 @@ int		fdf_color_mix(int color1, int color2, float ratio);
 
 // img
 t_pixel	fdf_new_pixel(int x, int y, int color);
+void	fdf_swap_pixels(t_pixel *p1, t_pixel *p2);
 void	fdf_draw_pixel(t_img *img, t_pixel p);
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
 void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3);

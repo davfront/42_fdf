@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/02 21:04:05 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/03 11:42:00 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS_FILES			=	\
 						color/fdf_color_mix.c\
 						\
 						img/fdf_new_pixel.c\
+						img/fdf_swap_pixels.c\
 						img/fdf_draw_pixel.c\
 						img/fdf_draw_line.c\
 						img/fdf_draw_triangle.c\
