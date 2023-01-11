@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 09:54:07 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:40:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int	fdf_render_frame(t_fdf *fdf)
 		&fdf->img.len, &fdf->img.endian);
 	// fdf_set_bg(fdf);
 	fdf_draw_map(fdf);
-	fdf_draw_help(fdf);
+	// fdf_draw_help(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_destroy_image(fdf->mlx, fdf->img.img);
 	return (0);

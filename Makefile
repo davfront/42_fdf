@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/11 09:56:35 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/11 10:47:05 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ OBJS_DIR			=	./obj
 OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
 
 HEADER_DIR			=	./include
-HEADER				=	$(HEADER_DIR)/fdf.h
+HEADER				=	$(HEADER_DIR)/fdf.h $(HEADER_DIR)/key_linux.h $(HEADER_DIR)/key_macos.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
 # Detect OS

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 11:08:26 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/19 13:44:51 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:43:43 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,19 @@
 # define KEY_Y	16
 # define KEY_Z	6
 
+// NUMBERS
+
+# define KEY_0	29
+# define KEY_1	18
+# define KEY_2	19
+# define KEY_3	20
+# define KEY_4	21
+# define KEY_5	22
+# define KEY_6	26
+# define KEY_7	28
+# define KEY_8	25
+# define KEY_9	8
+
 // ARROWS
 
 # define KEY_LEFT	123
@@ -51,6 +64,8 @@
 
 // MISC
 
+# define KEY_PLUS	24
+# define KEY_MINUS	27
 # define KEY_SPACE	49
 # define KEY_ESC	53
 # define KEY_TAB	48
