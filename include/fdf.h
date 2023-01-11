@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 12:17:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:22:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define PI				(3.14159265)
 
 # define ROTATE_STEP	(PI / 50)
+# define ROTATE_STEP_MOUSE	(PI / 500)
 # define SCALE_STEP		(1.1)
 # define TRANSLATE_STEP	(10)
 
@@ -94,6 +95,12 @@ typedef struct s_opt {
 	int		solid;
 	int		key_space;
 	int		key_z;
+	int		mouse_x0;
+	int		mouse_y0;
+	int		mouse_left_btn;
+	int		mouse_right_btn;
+	int		mouse_x;
+	int		mouse_y;
 }				t_opt;
 
 typedef struct s_fdf {

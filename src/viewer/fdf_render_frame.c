@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 12:00:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:20:46 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	float	z_cam;
 	float	r;
 
+
+
 	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
 	v[0] = x;
 	v[1] = y;
@@ -28,7 +30,11 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	fdf_matrix_translate(m, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
 	fdf_matrix_scale(m, fdf->zoom, fdf->zoom, fdf->zoom * fdf->z_scale);
 	fdf_matrix_multiply(m, fdf->mt);
-	fdf_matrix_translate(m, fdf->cx, fdf->cy);
+	fdf_matrix_rotate_y(m, -(fdf->opt.mouse_x - fdf->opt.mouse_x0) * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_rotate_x(m, (fdf->opt.mouse_y - fdf->opt.mouse_y0) * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_translate(m, \
+		fdf->cx + (fdf->opt.mouse_x - fdf->opt.mouse_x0) * fdf->opt.mouse_left_btn, \
+		fdf->cy + (fdf->opt.mouse_y - fdf->opt.mouse_y0) * fdf->opt.mouse_left_btn);
 	fdf_matrix_transform_point(v, m);
 	if (fdf->opt.perspective)
 	{

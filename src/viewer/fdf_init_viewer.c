@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 15:53:57 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:11:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	fdf_init_viewer(t_fdf *fdf)
 	fdf->opt.solid = 0;
 	fdf->opt.key_space = 0;
 	fdf->opt.key_z = 0;
+	fdf->opt.mouse_x0 = 0;
+	fdf->opt.mouse_y0 = 0;
+	fdf->opt.mouse_left_btn = 0;
+	fdf->opt.mouse_right_btn = 0;
+	fdf->opt.mouse_x = 0;
+	fdf->opt.mouse_y = 0;
 	fdf->cx = WIN_WIDTH / 2;
 	fdf->cy = WIN_HEIGHT / 2;
 	fdf->zoom = (WIN_WIDTH * 0.67 / (fdf->map.size_x - 1));
