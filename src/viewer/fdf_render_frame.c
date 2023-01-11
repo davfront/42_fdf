@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 13:30:25 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 09:54:07 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	float	v[4];
 	float	z_cam;
 	float	r;
+	float	z_scale;
 
+	z_scale = fmax(fdf->map.size_x, fdf->map.size_y) / fdf->map.dz / 5;
 	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
 	v[0] = x;
 	v[1] = y;
-	v[2] = fdf->map.values[x][y] / 10;
+	v[2] = fdf->map.values[x][y].z * z_scale;
 	v[3] = 1.0;
 	fdf_matrix_init(m);
 	fdf_matrix_multiply(m, fdf->mt);
@@ -39,8 +41,17 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 		p->y = v[1];
 		p->z = v[2];
 	}
-	r = fabs((float)(fdf->map.values[x][y] - fdf->map.z_min) / (float)(fdf->map.z_max - fdf->map.z_min));
+	if (fdf->map.has_color)
+	{
+		p->color = fdf->map.values[x][y].color;
+		if (p->color == -1)
+			p->color = COLOR_TXT;
+	}
+	else
+	{
+		r = fabs((float)(fdf->map.values[x][y].z - fdf->map.z_min) / (float)fdf->map.dz);
 	p->color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, r);
+	}
 }
 
 void	fdf_project_map(t_fdf *fdf)

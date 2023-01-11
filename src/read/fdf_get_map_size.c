@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 18:32:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:06:38 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 static int	fdf_count_line_values(char *line)
 {
-	int		count;
+	char	*bl;
+	char	**strs;
+	int		i;
 
 	if (!line)
 		return (0);
-	count = 0;
-	while (*line)
+	bl = ft_strchr(line, '\n');
+	if (bl)
+		*bl = '\0';
+	strs = ft_split(line, ' ');
+	if (!strs)
+		fdf_error_exit(NULL);
+	i = 0;
+	while (strs[i])
 	{
-		if (*line == ' ' || *line == '\n')
-			line++;
-		else if (ft_isdigit(*line) || (*line == '-' && ft_isdigit(*(line + 1))))
-		{
-			count++;
-			line++;
-			while (ft_isdigit(*line))
-				line++;
-		}
-		else
-			return (0);
+		ft_free(strs[i]);
+		i++;
 	}
-	return (count);
+	ft_free(strs);
+	return (i);
 }
 
 void	fdf_get_map_size(t_fdf *fdf)

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 11:42:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 09:56:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,26 @@ typedef struct s_triangle {
 	t_pixel	top;
 }				t_triangle;
 
-typedef struct s_vector {
+typedef struct s_vertice {
 	int	x;
 	int	y;
 	int	z;
-}				t_vector;
+	int color;
+}				t_vertice;
+
+typedef struct s_map_value {
+	int	z;
+	int	color;
+}				t_map_value;
 
 typedef struct s_map {
-	int	size_x;
-	int	size_y;
-	int	z_min;
-	int	z_max;
-	int	**values;
+	int			size_x;
+	int			size_y;
+	int			z_min;
+	int			z_max;
+	int			dz;
+	int			has_color;
+	t_map_value	**values;
 }				t_map;
 
 typedef struct s_img {
@@ -83,15 +91,15 @@ typedef struct s_opt {
 }				t_opt;
 
 typedef struct s_fdf {
-	char	*path;
-	char	*title;
-	t_map	map;
-	void	*mlx;
-	void	*win;
-	t_img	img;
-	t_pixel	**proj;
-	float	mt[4][4];
-	t_opt	opt;
+	char		*path;
+	char		*title;
+	t_map		map;
+	void		*mlx;
+	void		*win;
+	t_img		img;
+	t_vertice	**proj;
+	float		mt[4][4];
+	t_opt		opt;
 }				t_fdf;
 
 // utils
@@ -104,7 +112,7 @@ void	fdf_get_input(int argc, char **argv, t_fdf *fdf);
 void	fdf_get_map_size(t_fdf *fdf);
 void	fdf_alloc_map_values(t_fdf *fdf);
 void	fdf_get_map_values(t_fdf *fdf);
-void	fdf_get_map_zminmax(t_fdf *fdf);
+void	fdf_get_map_computed_values(t_fdf *fdf);
 void	fdf_read_map(t_fdf *fdf);
 
 // color
