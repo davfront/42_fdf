@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 09:56:35 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:17:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,19 @@
 #  include <key_linux.h>
 # endif
 
-# define WIN_WIDTH		1024
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		(1024)
+# define WIN_HEIGHT		(600)
 
-# define COLOR_BG		0x00000000
-# define COLOR_TXT		0x00FFFFFF
-# define COLOR_TOP		0x00FF0000
-# define COLOR_BOTTOM	0x000000FF
+# define COLOR_BG		(0x00000000)
+# define COLOR_TXT		(0x00FFFFFF)
+# define COLOR_TOP		(0x00FF0000)
+# define COLOR_BOTTOM	(0x000000FF)
 
-# define PI				3.14159265
+# define PI				(3.14159265)
+
+# define ROTATE_STEP	(PI / 50)
+# define SCALE_STEP		(1.1)
+# define TRANSLATE_STEP	(10)
 
 typedef struct s_trgb {
 	int	t;
@@ -88,6 +92,8 @@ typedef struct s_opt {
 	int		perspective;
 	int		help;
 	int		solid;
+	int		key_space;
+	int		key_z;
 }				t_opt;
 
 typedef struct s_fdf {
@@ -98,6 +104,10 @@ typedef struct s_fdf {
 	void		*win;
 	t_img		img;
 	t_vertice	**proj;
+	float		zoom;
+	float		z_scale;
+	int			cx;
+	int			cy;
 	float		mt[4][4];
 	t_opt		opt;
 }				t_fdf;

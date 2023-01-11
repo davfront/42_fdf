@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:52:54 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 12:57:18 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:54:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,11 @@ void	fdf_draw_help(t_fdf *fdf)
 	line++;
 	fdf_draw_text(fdf, line++, "[+] Zoom in");
 	fdf_draw_text(fdf, line++, "[-] Zoom out");
+	line++;
+	fdf_draw_text(fdf, line++, "[Z] + [+] Scale Z-axis Up");
+	fdf_draw_text(fdf, line++, "[Z] + [-] Scale Z-axis Down");
+	line++;
+	fdf_draw_text(fdf, line++, "[Arrow] Rotate");
+	line++;
+	fdf_draw_text(fdf, line++, "[Space] + [Arrow] Translate");
 }

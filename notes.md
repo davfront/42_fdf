@@ -13,6 +13,12 @@ Resource: [Getting a screen on Windows 10 (WSL2)](https://harm-smits.github.io/4
 export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 ```
 
+## Check leaks
+
+```bash
+leaks --atExit -- ./fdf maps/42.fdf
+```
+
 ## Features
 
 - [x] Isometric view
@@ -20,9 +26,10 @@ export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 - [x] Other views (top, sides)
 - [x] Rotate
 - [x] Scale
-- [ ] Translate
+- [x] Scale Z
+- [x] Translate
 - [x] Map colors
-- [ ] Themes
 - [/] Help
 - [x] Solid rendering
 - [ ] Navigate with mouse
+

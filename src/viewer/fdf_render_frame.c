@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 10:40:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:00:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	float	v[4];
 	float	z_cam;
 	float	r;
-	float	z_scale;
 
-	z_scale = fmax(fdf->map.size_x, fdf->map.size_y) / fdf->map.dz / 5;
 	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
 	v[0] = x;
 	v[1] = y;
-	v[2] = fdf->map.values[x][y].z * z_scale;
+	v[2] = fdf->map.values[x][y].z;
 	v[3] = 1.0;
 	fdf_matrix_init(m);
+	fdf_matrix_translate(m, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
+	fdf_matrix_scale(m, fdf->zoom, fdf->zoom, fdf->zoom * fdf->z_scale);
 	fdf_matrix_multiply(m, fdf->mt);
+	fdf_matrix_translate(m, fdf->cx, fdf->cy);
 	fdf_matrix_transform_point(v, m);
 	if (fdf->opt.perspective)
 	{
