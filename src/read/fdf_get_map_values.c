@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 11:31:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:02:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 	{
 		if (!fdf_is_entry_valid(strs[x]))
 		{
-			ft_free(strs[x]);
+			ft_free((void **)&strs[x]);
 			fdf_free_map(fdf);
 			fdf_error_exit("Invalid file content");
 		}
@@ -96,10 +96,10 @@ static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 		substr = ft_strnstr(strs[x], ",0x", ft_strlen(strs[x]));
 		if (substr)
 			fdf->map.values[x][y].color = ft_atoi_hex(substr + 3);
-		ft_free(strs[x]);
+		ft_free((void **)&strs[x]);
 		x++;
 	}
-	ft_free(strs);
+	ft_free((void **)&strs);
 }
 
 void	fdf_get_map_values(t_fdf *fdf)
@@ -114,10 +114,10 @@ void	fdf_get_map_values(t_fdf *fdf)
 	while (line && *line)
 	{
 		fdf_get_line_values(fdf, y, line);
-		ft_free(line);
+		ft_free((void **)&line);
 		line = ft_gnl(fd);
 		y++;
 	}
-	ft_free(line);
+	ft_free((void **)&line);
 	fdf_close_file(fd);
 }

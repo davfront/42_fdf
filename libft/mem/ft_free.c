@@ -6,16 +6,16 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:00:48 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 14:03:05 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:50:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_free(void *ptr)
+void	*ft_free(void **ptr)
 {
-	if (ptr)
-		free(ptr);
-	ptr = NULL;
+	if (*ptr)
+		free(*ptr);
+	*ptr = NULL;
 	return (NULL);
 }
