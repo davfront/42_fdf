@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/12 09:33:47 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/12 09:40:13 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,7 @@ SRCS_FILES			=	\
 						matrix/fdf_matrix_scale.c\
 						matrix/fdf_matrix_translate.c\
 						matrix/fdf_matrix_rotate_x.c\
-						matrix/fdf_matrix_rotate_x_at.c\
 						matrix/fdf_matrix_rotate_y.c\
-						matrix/fdf_matrix_rotate_y_at.c\
 						matrix/fdf_matrix_transform_point.c\
 						\
 						viewer/fdf_init_viewer.c\
