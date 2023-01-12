@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 21:10:45 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:30:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@
 # define SCALE_STEP		(1.1)
 # define TRANSLATE_STEP	(10)
 
-typedef struct s_trgb {
+typedef struct s_rgb {
 	int	t;
 	int	r;
 	int	g;
 	int	b;
-}				t_trgb;
+}				t_rgb;
 
 typedef struct s_pixel {
 	int	x;
@@ -133,8 +133,8 @@ void	fdf_get_map_computed_values(t_fdf *fdf);
 void	fdf_read_map(t_fdf *fdf);
 
 // color
-t_trgb	fdf_color_trgb(int color);
-int		fdf_color_by_trgb(t_trgb c);
+t_rgb	fdf_color_rgb(int color);
+int		fdf_color_by_rgb(t_rgb c);
 int		fdf_color_mix(int color1, int color2, float ratio);
 
 // img
