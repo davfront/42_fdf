@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 09:40:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:45:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_atoi_hex(char *str)
 	return (n);
 }
 
-static void fdf_get_line_values(t_fdf *fdf, int y, char *line)
+static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 {
 	char	**strs;
 	int		x;
@@ -48,7 +48,6 @@ static void fdf_get_line_values(t_fdf *fdf, int y, char *line)
 		fdf->map.values[x][y].z = ft_atoi(strs[x]);
 		fdf->map.values[x][y].color = -1;
 		substr = ft_strnstr(strs[x], ",0x", ft_strlen(strs[x]));
-		
 		if (substr)
 			fdf->map.values[x][y].color = ft_atoi_hex(substr + 3);
 		ft_free(strs[x]);
@@ -57,11 +56,11 @@ static void fdf_get_line_values(t_fdf *fdf, int y, char *line)
 	ft_free(strs);
 }
 
-void fdf_get_map_values(t_fdf *fdf)
+void	fdf_get_map_values(t_fdf *fdf)
 {
-	int fd;
-	char *line;
-	int y;
+	int		fd;
+	char	*line;
+	int		y;
 
 	fd = fdf_open_file(fdf->path);
 	y = 0;
