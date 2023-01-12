@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_hooks_key.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
+/*   Updated: 2023/01/12 15:36:38 by dapereir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fdf.h"
+
+void	fdf_on_arrow_down(int keycode, t_fdf *fdf)
+{
+	if (fdf->ui.key_space)
+	{
+		if (keycode == KEY_LEFT)
+			fdf->viewer.cx += -TRANSLATE_STEP;
+		if (keycode == KEY_RIGHT)
+			fdf->viewer.cx += TRANSLATE_STEP;
+		if (keycode == KEY_UP)
+			fdf->viewer.cy += -TRANSLATE_STEP;
+		if (keycode == KEY_DOWN)
+			fdf->viewer.cy += TRANSLATE_STEP;
+	}
+	else
+	{
+		if (keycode == KEY_LEFT)
+			fdf_matrix_rotate_y(fdf->viewer.rot, ROTATE_STEP);
+		if (keycode == KEY_RIGHT)
+			fdf_matrix_rotate_y(fdf->viewer.rot, -ROTATE_STEP);
+		if (keycode == KEY_UP)
+			fdf_matrix_rotate_x(fdf->viewer.rot, -ROTATE_STEP);
+		if (keycode == KEY_DOWN)
+			fdf_matrix_rotate_x(fdf->viewer.rot, ROTATE_STEP);
+	}
+}
+
+void	fdf_on_plus_minus_down(int keycode, t_fdf *fdf)
+{
+	if (fdf->ui.key_z)
+	{
+		if (keycode == KEY_PLUS)
+			fdf->viewer.z_scale *= SCALE_STEP;
+		if (keycode == KEY_MINUS)
+			fdf->viewer.z_scale /= SCALE_STEP;
+	}
+	else
+	{
+		if (keycode == KEY_PLUS)
+			fdf->viewer.zoom *= SCALE_STEP;
+		if (keycode == KEY_MINUS)
+			fdf->viewer.zoom /= SCALE_STEP;
+	}
+}
+
+void	fdf_on_number_down(int keycode, t_fdf *fdf)
+{
+	if (keycode == KEY_0)
+		fdf_set_view(fdf, 0);
+	if (keycode == KEY_1)
+		fdf_set_view(fdf, 1);
+	if (keycode == KEY_2)
+		fdf_set_view(fdf, 2);
+	if (keycode == KEY_3)
+		fdf_set_view(fdf, 3);
+}
+
+int	fdf_on_keydown(int keycode, t_fdf *fdf)
+{
+	if (keycode == KEY_ESC)
+		fdf_exit(fdf);
+	if (keycode == KEY_H)
+		fdf->viewer.help = !fdf->viewer.help;
+	if (keycode == KEY_P)
+		fdf->viewer.perspective = !fdf->viewer.perspective;
+	if (keycode == KEY_R)
+		fdf->viewer.solid = !fdf->viewer.solid;
+	if (keycode == KEY_SPACE)
+		fdf->ui.key_space = 1;
+	if (keycode == KEY_Z)
+		fdf->ui.key_z = 1;
+	fdf_on_number_down(keycode, fdf);
+	fdf_on_arrow_down(keycode, fdf);
+	fdf_on_plus_minus_down(keycode, fdf);
+	return (0);
+}
+
+int	fdf_on_keyup(int keycode, t_fdf *fdf)
+{
+	if (keycode == KEY_SPACE)
+		fdf->ui.key_space = 0;
+	if (keycode == KEY_Z)
+		fdf->ui.key_z = 0;
+	return (0);
+}

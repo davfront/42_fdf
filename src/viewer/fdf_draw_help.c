@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:52:54 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 21:17:15 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:54:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fdf_draw_help(t_fdf *fdf)
 
 	line = 1;
 	fdf_draw_text(fdf, line++, "[H] Help");
-	if (!fdf->opt.help)
+	if (!fdf->viewer.help)
 		return ;
 	line++;
 	fdf_draw_text(fdf, line++, "[0] Isometric view");

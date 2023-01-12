@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/12 12:28:55 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/12 17:25:03 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,6 @@ SRCS_FILES			=	\
 						img/fdf_draw_pixel.c\
 						img/fdf_draw_line.c\
 						img/fdf_draw_triangle.c\
-						img/fdf_set_bg.c\
 						\
 						matrix/fdf_matrix_copy.c\
 						matrix/fdf_matrix_multiply.c\
@@ -50,12 +49,22 @@ SRCS_FILES			=	\
 						matrix/fdf_matrix_rotate_y.c\
 						matrix/fdf_matrix_transform_point.c\
 						\
+						viewer/fdf_init_ui.c\
+						viewer/fdf_set_view.c\
 						viewer/fdf_init_viewer.c\
 						viewer/fdf_hooks.c\
+						viewer/fdf_hooks_key.c\
+						viewer/fdf_hooks_mouse.c\
+						viewer/fdf_update_proj.c\
+						viewer/fdf_alloc_map_proj.c\
+						viewer/fdf_get_map_proj.c\
+						viewer/fdf_free_map_proj.c\
+						viewer/fdf_draw_map.c\
 						viewer/fdf_draw_help.c\
 						viewer/fdf_render_frame.c\
 						viewer/fdf_start_viewer.c\
 						\
+						fdf_free_all.c\
 						fdf_exit.c\
 						main.c
 

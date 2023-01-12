@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 12:29:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:25:38 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@
 # define PI				(3.14159265)
 
 # define ROTATE_STEP	(PI / 50)
-# define ROTATE_STEP_MOUSE	(PI / 500)
 # define SCALE_STEP		(1.1)
 # define TRANSLATE_STEP	(10)
+
+# define MOUSE_ROT		(PI / 500)
 
 typedef struct s_rgb {
 	int	t;
@@ -100,11 +101,18 @@ typedef struct s_ui {
 	int		mouse_right_btn;
 }				t_ui;
 
-typedef struct s_opt {
-	int		perspective;
-	int		help;
-	int		solid;
-}				t_opt;
+typedef struct s_viewer {
+	int			perspective;
+	int			help;
+	int			solid;
+	float		zoom;
+	float		z_scale;
+	int			cx;
+	int			cy;
+	float		rot[4][4];
+	float		proj[4][4];
+	t_vertice	**map_proj;
+}				t_viewer;
 
 typedef struct s_fdf {
 	char		*path;
@@ -113,13 +121,7 @@ typedef struct s_fdf {
 	void		*mlx;
 	void		*win;
 	t_img		img;
-	t_vertice	**proj;
-	float		zoom;
-	float		z_scale;
-	int			cx;
-	int			cy;
-	float		mt[4][4];
-	t_opt		opt;
+	t_viewer	viewer;
 	t_ui		ui;
 }				t_fdf;
 
@@ -149,7 +151,6 @@ void	fdf_swap_pixels(t_pixel *p1, t_pixel *p2);
 void	fdf_draw_pixel(t_img *img, t_pixel p);
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
 void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3);
-void	fdf_set_bg(t_fdf *fdf);
 
 // matrix
 void	fdf_matrix_copy(float dst[4][4], float src[4][4]);
@@ -162,15 +163,27 @@ void	fdf_matrix_rotate_y(float m[4][4], float ry);
 void	fdf_matrix_transform_point(float point[4], float matrix[4][4]);
 
 // viewer
+void	fdf_init_ui(t_fdf *fdf);
+void	fdf_set_view(t_fdf *fdf, int view);
 void	fdf_init_viewer(t_fdf *fdf);
-void	fdf_init_mt(t_fdf *fdf, int view);
+int		fdf_on_keydown(int keycode, t_fdf *fdf);
+int		fdf_on_keyup(int keycode, t_fdf *fdf);
+int		fdf_on_mouse_down(int button, int x, int y, t_fdf *fdf);
+int		fdf_on_mouse_up(int button, int x, int y, t_fdf *fdf);
+int		fdf_on_mouse_move(int x, int y, t_fdf *fdf);
 void	fdf_hooks(t_fdf *fdf);
+void	fdf_update_proj(t_fdf *fdf);
+void	fdf_alloc_map_proj(t_fdf *fdf);
+void	fdf_get_map_proj(t_fdf *fdf);
+void	fdf_free_map_proj(t_fdf *fdf);
+void	fdf_draw_map(t_fdf *fdf);
 void	fdf_draw_help(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
 void	fdf_start_viewer(t_fdf *fdf);
-void	fdf_free_projection(t_fdf *fdf);
+void	fdf_free_map_proj(t_fdf *fdf);
 
 // exit
+void	fdf_free_all(t_fdf *fdf);
 int		fdf_exit(t_fdf *fdf);
 
 #endif

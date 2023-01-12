@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 21:03:41 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 16:02:54 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:40:03 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	fdf_start_viewer(t_fdf *fdf)
 {
+	fdf_init_ui(fdf);
 	fdf_init_viewer(fdf);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);

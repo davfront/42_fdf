@@ -6,12 +6,11 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 12:24:19 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:03:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 int	fdf_get_hex_char_value(char c)
 {
