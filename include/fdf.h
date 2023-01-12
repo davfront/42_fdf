@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 17:22:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:10:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ typedef struct s_opt {
 	int		key_z;
 	int		mouse_x0;
 	int		mouse_y0;
+	int		mouse_dx;
+	int		mouse_dy;
 	int		mouse_left_btn;
 	int		mouse_right_btn;
-	int		mouse_x;
-	int		mouse_y;
 }				t_opt;
 
 typedef struct s_fdf {
@@ -161,6 +161,7 @@ void	fdf_matrix_transform_point(float point[4], float matrix[4][4]);
 void	fdf_init_viewer(t_fdf *fdf);
 void	fdf_init_mt(t_fdf *fdf, int view);
 void	fdf_hooks(t_fdf *fdf);
+void	fdf_draw_help(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
 void	fdf_start_viewer(t_fdf *fdf);
 

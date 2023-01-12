@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 17:20:54 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:17:07 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,36 +90,38 @@ static int	fdf_on_mouse_down(int button, int x, int y, t_fdf *fdf)
 		fdf->opt.mouse_right_btn = 1;
 	fdf->opt.mouse_x0 = x;
 	fdf->opt.mouse_y0 = y;
-	fdf->opt.mouse_x = x;
-	fdf->opt.mouse_y = y;
+	fdf->opt.mouse_dx = 0;
+	fdf->opt.mouse_dy = 0;
 	return (0);
 }
 
 static int	fdf_on_mouse_up(int button, int x, int y, t_fdf *fdf)
 {
+	fdf->opt.mouse_dx = x - fdf->opt.mouse_x0;
+	fdf->opt.mouse_dy = y - fdf->opt.mouse_y0;
 	if (button == MOUSE_LEFT)
 	{
-		fdf->cx += x - fdf->opt.mouse_x0;
-		fdf->cy += y - fdf->opt.mouse_y0;
+		fdf->cx += fdf->opt.mouse_dx;
+		fdf->cy += fdf->opt.mouse_dy;
 		fdf->opt.mouse_left_btn = 0;
 	}
 	if (button == MOUSE_RIGHT)
 	{
-		fdf_matrix_rotate_y(fdf->mt, -(x - fdf->opt.mouse_x0) * ROTATE_STEP_MOUSE);
-		fdf_matrix_rotate_x(fdf->mt, (y - fdf->opt.mouse_y0) * ROTATE_STEP_MOUSE);
+		fdf_matrix_rotate_y(fdf->mt, -fdf->opt.mouse_dx * ROTATE_STEP_MOUSE);
+		fdf_matrix_rotate_x(fdf->mt, fdf->opt.mouse_dy * ROTATE_STEP_MOUSE);
 		fdf->opt.mouse_right_btn = 0;
 	}
 	fdf->opt.mouse_x0 = 0;
 	fdf->opt.mouse_y0 = 0;
-	fdf->opt.mouse_x = 0;
-	fdf->opt.mouse_y = 0;
+	fdf->opt.mouse_dx = 0;
+	fdf->opt.mouse_dy = 0;
 	return (0);
 }
 
 static int	fdf_on_mouse_move(int x, int y, t_fdf *fdf)
 {
-	fdf->opt.mouse_x = x;
-	fdf->opt.mouse_y = y;
+	fdf->opt.mouse_dx = x - fdf->opt.mouse_x0;
+	fdf->opt.mouse_dy = y - fdf->opt.mouse_y0;
 	return (0);
 }
 
@@ -128,7 +130,7 @@ void	fdf_hooks(t_fdf *fdf)
 	mlx_hook(fdf->win, 17, 1L << 0, fdf_exit, fdf);
 	mlx_hook(fdf->win, 2, 1L << 0, fdf_on_keydown, fdf);
 	mlx_hook(fdf->win, 3, 1L << 1, fdf_on_keyup, fdf);
-	mlx_hook(fdf->win, 4, 1L<<6, fdf_on_mouse_down, fdf);
-	mlx_hook(fdf->win, 5, 1L<<6, fdf_on_mouse_up, fdf);
-	mlx_hook(fdf->win, 6, 1L<<6, fdf_on_mouse_move, fdf);
+	mlx_hook(fdf->win, 4, 1L << 2, fdf_on_mouse_down, fdf);
+	mlx_hook(fdf->win, 5, 1L << 3, fdf_on_mouse_up, fdf);
+	mlx_hook(fdf->win, 6, 1L << 6, fdf_on_mouse_move, fdf);
 }

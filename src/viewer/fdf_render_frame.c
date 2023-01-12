@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 17:20:46 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:17:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	fdf_matrix_translate(m, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
 	fdf_matrix_scale(m, fdf->zoom, fdf->zoom, fdf->zoom * fdf->z_scale);
 	fdf_matrix_multiply(m, fdf->mt);
-	fdf_matrix_rotate_y(m, -(fdf->opt.mouse_x - fdf->opt.mouse_x0) * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
-	fdf_matrix_rotate_x(m, (fdf->opt.mouse_y - fdf->opt.mouse_y0) * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_rotate_y(m, -fdf->opt.mouse_dx * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_rotate_x(m, fdf->opt.mouse_dy * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
 	fdf_matrix_translate(m, \
-		fdf->cx + (fdf->opt.mouse_x - fdf->opt.mouse_x0) * fdf->opt.mouse_left_btn, \
-		fdf->cy + (fdf->opt.mouse_y - fdf->opt.mouse_y0) * fdf->opt.mouse_left_btn);
+		fdf->cx + fdf->opt.mouse_dx * fdf->opt.mouse_left_btn, \
+		fdf->cy + fdf->opt.mouse_dy * fdf->opt.mouse_left_btn);
 	fdf_matrix_transform_point(v, m);
 	if (fdf->opt.perspective)
 	{
@@ -170,7 +170,7 @@ int	fdf_render_frame(t_fdf *fdf)
 		&fdf->img.len, &fdf->img.endian);
 	// fdf_set_bg(fdf);
 	fdf_draw_map(fdf);
-	// fdf_draw_help(fdf);
+	fdf_draw_help(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_destroy_image(fdf->mlx, fdf->img.img);
 	return (0);
