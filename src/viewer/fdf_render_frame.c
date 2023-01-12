@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 12:02:37 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:27:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	fdf_matrix_translate(m, -fdf->map.size_x / 2, -fdf->map.size_y / 2);
 	fdf_matrix_scale(m, fdf->zoom, fdf->zoom, fdf->zoom * fdf->z_scale);
 	fdf_matrix_multiply(m, fdf->mt);
-	fdf_matrix_rotate_y(m, -fdf->opt.mouse_dx * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
-	fdf_matrix_rotate_x(m, fdf->opt.mouse_dy * fdf->opt.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_rotate_y(m, -fdf->ui.mouse_dx * fdf->ui.mouse_right_btn * ROTATE_STEP_MOUSE);
+	fdf_matrix_rotate_x(m, fdf->ui.mouse_dy * fdf->ui.mouse_right_btn * ROTATE_STEP_MOUSE);
 	fdf_matrix_translate(m, \
-		fdf->cx + fdf->opt.mouse_dx * fdf->opt.mouse_left_btn, \
-		fdf->cy + fdf->opt.mouse_dy * fdf->opt.mouse_left_btn);
+		fdf->cx + fdf->ui.mouse_dx * fdf->ui.mouse_left_btn, \
+		fdf->cy + fdf->ui.mouse_dy * fdf->ui.mouse_left_btn);
 	fdf_matrix_transform_point(v, m);
 	if (fdf->opt.perspective)
 	{

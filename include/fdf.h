@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 12:24:51 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:29:50 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,7 @@ typedef struct s_img {
 	int		endian;
 }				t_img;
 
-typedef struct s_opt {
-	int		perspective;
-	int		help;
-	int		solid;
+typedef struct s_ui {
 	int		key_space;
 	int		key_z;
 	int		mouse_x0;
@@ -101,6 +98,12 @@ typedef struct s_opt {
 	int		mouse_dy;
 	int		mouse_left_btn;
 	int		mouse_right_btn;
+}				t_ui;
+
+typedef struct s_opt {
+	int		perspective;
+	int		help;
+	int		solid;
 }				t_opt;
 
 typedef struct s_fdf {
@@ -117,6 +120,7 @@ typedef struct s_fdf {
 	int			cy;
 	float		mt[4][4];
 	t_opt		opt;
+	t_ui		ui;
 }				t_fdf;
 
 // utils
