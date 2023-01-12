@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/12 09:54:45 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/12 12:28:55 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS_FILES			=	\
 						utils/fdf_open_file.c\
 						utils/fdf_close_file.c\
 						utils/fdf_error_exit.c\
+						utils/fdf_get_hex_char_value.c\
 						\
 						read/fdf_get_input.c\
 						read/fdf_get_map_size.c\

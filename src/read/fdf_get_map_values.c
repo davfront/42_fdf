@@ -6,26 +6,11 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 12:02:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:25:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-
-static int	fdf_get_hex_char_value(char c)
-{
-	char	hex[17];
-	char	*s;
-
-	if (!c)
-		return (-1);
-	ft_strlcpy(hex, "0123456789ABCDEF", 17);
-	s = ft_strchr(hex, ft_toupper(c));
-	if (s)
-		return (s - hex);
-	return (-1);
-}
 
 static int	fdf_is_entry_valid(char *s)
 {
@@ -54,7 +39,7 @@ static int	fdf_is_entry_valid(char *s)
 	return (1);
 }
 
-static int	ft_atoi_hex(char *str)
+static int	fdf_atoi_hex(char *str)
 {
 	int		n;
 	int		i;
@@ -70,11 +55,23 @@ static int	ft_atoi_hex(char *str)
 	return (n);
 }
 
+static t_map_value	fdf_get_entry_values(char *entry)
+{
+	t_map_value	v;
+	char		*substr;
+
+	v.z = ft_atoi(entry);
+	v.color = -1;
+	substr = ft_strnstr(entry, ",0x", ft_strlen(entry));
+	if (substr)
+		v.color = fdf_atoi_hex(substr + 3);
+	return (v);
+}
+
 static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 {
 	char	**strs;
 	int		x;
-	char	*substr;
 
 	strs = ft_split(line, ' ');
 	if (!strs)
@@ -88,14 +85,11 @@ static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 		if (!fdf_is_entry_valid(strs[x]))
 		{
 			ft_free((void **)&strs[x]);
+			ft_free((void **)&strs);
 			fdf_free_map(fdf);
 			fdf_error_exit("Invalid file content");
 		}
-		fdf->map.values[x][y].z = ft_atoi(strs[x]);
-		fdf->map.values[x][y].color = -1;
-		substr = ft_strnstr(strs[x], ",0x", ft_strlen(strs[x]));
-		if (substr)
-			fdf->map.values[x][y].color = ft_atoi_hex(substr + 3);
+		fdf->map.values[x][y] = fdf_get_entry_values(strs[x]);
 		ft_free((void **)&strs[x]);
 		x++;
 	}

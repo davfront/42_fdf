@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 09:59:07 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:24:51 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct s_fdf {
 int		fdf_open_file(char *path);
 void	fdf_close_file(int fd);
 void	fdf_error_exit(char *msg);
+int		fdf_get_hex_char_value(char c);
 
 // read
 void	fdf_get_input(int argc, char **argv, t_fdf *fdf);
