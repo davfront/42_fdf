@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 20:42:29 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:57:54 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	fdf_alloc_map_values(t_fdf *fdf)
 		fdf->map.values[i] = ft_calloc(fdf->map.size_y, sizeof(t_map_value));
 		if (fdf->map.values[i] == NULL)
 		{
-			fdf_reset(fdf);
+			fdf_free_map(fdf);
 			fdf_error_exit(NULL);
 		}
 		i++;

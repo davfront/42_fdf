@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/12 09:40:13 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/12 09:54:45 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS_FILES			=	\
 						read/fdf_get_map_values.c\
 						read/fdf_get_map_computed_values.c\
 						read/fdf_read_map.c\
+						read/fdf_free_map.c\
 						\
 						color/fdf_color_rgb.c\
 						color/fdf_color_by_rgb.c\
@@ -54,7 +55,6 @@ SRCS_FILES			=	\
 						viewer/fdf_render_frame.c\
 						viewer/fdf_start_viewer.c\
 						\
-						fdf_reset.c\
 						fdf_exit.c\
 						main.c
 

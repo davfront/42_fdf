@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 09:38:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:59:07 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	fdf_alloc_map_values(t_fdf *fdf);
 void	fdf_get_map_values(t_fdf *fdf);
 void	fdf_get_map_computed_values(t_fdf *fdf);
 void	fdf_read_map(t_fdf *fdf);
+int		fdf_free_map(t_fdf *fdf);
 
 // color
 t_rgb	fdf_color_rgb(int color);
@@ -162,9 +163,9 @@ void	fdf_hooks(t_fdf *fdf);
 void	fdf_draw_help(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
 void	fdf_start_viewer(t_fdf *fdf);
+void	fdf_free_projection(t_fdf *fdf);
 
 // exit
-int		fdf_reset(t_fdf *fdf);
 int		fdf_exit(t_fdf *fdf);
 
 #endif

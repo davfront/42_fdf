@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 09:45:32 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:58:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	fdf_get_line_values(t_fdf *fdf, int y, char *line)
 	strs = ft_split(line, ' ');
 	if (!strs)
 	{
-		fdf_reset(fdf);
+		fdf_free_map(fdf);
 		fdf_error_exit(NULL);
 	}
 	x = 0;
