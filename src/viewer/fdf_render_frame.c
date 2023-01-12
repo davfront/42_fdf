@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 09:58:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:42:25 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,17 @@ void	fdf_free_projection(t_fdf *fdf)
 {
 	int	x;
 
-	x = 0;
-	while (x < fdf->map.size_x)
+	if (fdf->proj)
 	{
-		ft_free(fdf->proj[x]);
-		x++;
+		x = 0;
+		while (x < fdf->map.size_x)
+		{
+			ft_free(fdf->proj[x]);
+			x++;
+		}
 	}
 	ft_free(fdf->proj);
+	fdf->proj = NULL;
 }
 
 static t_pixel	fdf_proj_px(t_fdf *fdf, int x, int y)

@@ -31,5 +31,5 @@ leaks --atExit -- ./fdf maps/42.fdf
 - [x] Map colors
 - [/] Help
 - [x] Solid rendering
-- [ ] Navigate with mouse
+- [x] Navigate with mouse
 
