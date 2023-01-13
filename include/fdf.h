@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 17:25:38 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:26:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,16 @@ typedef struct s_ui {
 	int		mouse_right_btn;
 }				t_ui;
 
+typedef enum e_render {
+    WIREFRAME,
+    WIREFRAME_NO_HIDDEN,
+    SOLID
+}				t_render;
+
 typedef struct s_viewer {
 	int			perspective;
 	int			help;
-	int			solid;
+	t_render	render;
 	float		zoom;
 	float		z_scale;
 	int			cx;

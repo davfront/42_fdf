@@ -4,7 +4,6 @@ Resource: [Getting a screen on Windows 10 (WSL2)](https://harm-smits.github.io/4
 
 1. Run XLaunch
 2. Type `export DISPLAY=localhost:0.0`
-
 3. Run `./fdf`
 
 ## Full command
@@ -22,14 +21,22 @@ leaks --atExit -- ./fdf maps/42.fdf
 ## Features
 
 - [x] Isometric view
-- [/] Perspective view
+- [x] Perspective view
 - [x] Other views (top, sides)
 - [x] Rotate
 - [x] Scale
 - [x] Scale Z
 - [x] Translate
 - [x] Map colors
-- [/] Help
+- [x] Help
 - [x] Solid rendering
 - [x] Navigate with mouse
 
+Issues to fix:
+
+- [ ] Perspective with solid rendering
+- [ ] Help blinking
+- [ ] Help to update (usage, controls)
+- [ ] Zoom crash
+- [ ] Disable color gradient by default
+- [ ] Last check: Norminette, Leaks, Sanitize

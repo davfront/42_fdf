@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 17:10:31 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:28:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,44 +24,69 @@ static t_pixel	fdf_proj_px(t_fdf *fdf, int x, int y)
 	return (p);
 }
 
-void	fdf_draw_xy_edge(t_fdf *fdf, int x, int y)
+static void	fdf_get_edge_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y, \
+	int force_bg_color)
 {
-	t_pixel	p00;
-	t_pixel	p10;
-	t_pixel	p01;
-	t_pixel	p11;
-
-	if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
+	(*p)[0][0] = fdf_proj_px(fdf, x, y);
+	(*p)[1][0] = fdf_proj_px(fdf, x + 1, y);
+	(*p)[0][1] = fdf_proj_px(fdf, x, y + 1);
+	(*p)[1][1] = fdf_proj_px(fdf, x + 1, y + 1);
+	if (force_bg_color)
 	{
-		p00 = fdf_proj_px(fdf, x, y);
-		p10 = fdf_proj_px(fdf, x + 1, y);
-		p01 = fdf_proj_px(fdf, x, y + 1);
-		p11 = fdf_proj_px(fdf, x + 1, y + 1);
-		fdf_draw_triangle(&fdf->img, p00, p10, p01);
-		fdf_draw_triangle(&fdf->img, p10, p01, p11);
+		(*p)[0][0].color = COLOR_BG;
+		(*p)[1][0].color = COLOR_BG;
+		(*p)[0][1].color = COLOR_BG;
+		(*p)[1][1].color = COLOR_BG;
 	}
 }
 
-void	fdf_draw_xy_lines(t_fdf *fdf, int x, int y)
+static void	fdf_draw_xy_solid(t_fdf *fdf, int x, int y, int force_bg_color)
 {
-	t_pixel	p00;
-	t_pixel	p10;
-	t_pixel	p01;
-	t_pixel	p11;
+	t_pixel	p[2][2];
+	int		z1;
+	int		z2;
 
 	if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
 	{
-		p00 = fdf_proj_px(fdf, x, y);
-		p10 = fdf_proj_px(fdf, x + 1, y);
-		p01 = fdf_proj_px(fdf, x, y + 1);
-		p11 = fdf_proj_px(fdf, x + 1, y + 1);
-		if (y == 0)
-			fdf_draw_line(&fdf->img, p00, p10);
-		if (x == 0)
-			fdf_draw_line(&fdf->img, p00, p01);
-		fdf_draw_line(&fdf->img, p10, p11);
-		fdf_draw_line(&fdf->img, p01, p11);
+		fdf_get_edge_pixels(fdf, &p, x, y, force_bg_color);
+		z1 = fdf->map.values[x][y].z + fdf->map.values[x + 1][y + 1].z;
+		z2 = fdf->map.values[x + 1][y].z + fdf->map.values[x][y + 1].z;
+		if (z1 < z2)
+		{
+			fdf_draw_triangle(&fdf->img, p[0][0], p[1][0], p[1][1]);
+			fdf_draw_triangle(&fdf->img, p[0][0], p[1][1], p[0][1]);
+		}
+		else
+		{
+			fdf_draw_triangle(&fdf->img, p[0][0], p[1][0], p[0][1]);
+			fdf_draw_triangle(&fdf->img, p[1][0], p[1][1], p[0][1]);
+		}
 	}
+}
+
+static void	fdf_draw_xy_wireframe(t_fdf *fdf, int x, int y)
+{
+	t_pixel	p[2][2];
+
+	if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
+	{
+		fdf_get_edge_pixels(fdf, &p, x, y, 0);
+		fdf_draw_line(&fdf->img, p[0][0], p[1][0]);
+		fdf_draw_line(&fdf->img, p[0][0], p[0][1]);
+		fdf_draw_line(&fdf->img, p[1][0], p[1][1]);
+		fdf_draw_line(&fdf->img, p[0][1], p[1][1]);
+	}
+}
+
+void	fdf_draw_edge(t_fdf *fdf, int x, int y)
+{
+	t_render	r;
+
+	r = fdf->viewer.render;
+	if (r == SOLID || r == WIREFRAME_NO_HIDDEN)
+		fdf_draw_xy_solid(fdf, x, y, r == WIREFRAME_NO_HIDDEN);
+	if (r == WIREFRAME || r == WIREFRAME_NO_HIDDEN)
+		fdf_draw_xy_wireframe(fdf, x, y);
 }
 
 void	fdf_draw_map(t_fdf *fdf)
@@ -82,10 +107,7 @@ void	fdf_draw_map(t_fdf *fdf)
 		y = 0 + y_rev * (fdf->map.size_y - 1);
 		while (y <= fdf->map.size_y - 1 && y >= 0)
 		{
-			if (fdf->viewer.solid)
-				fdf_draw_xy_edge(fdf, x, y);
-			else
-				fdf_draw_xy_lines(fdf, x, y);
+			fdf_draw_edge(fdf, x, y);
 			y += 1 - 2 * y_rev;
 		}
 		x += 1 - 2 * x_rev;
