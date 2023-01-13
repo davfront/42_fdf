@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 15:50:22 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:09:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	fdf_init_z_scale(t_fdf *fdf)
 	float	max_xy;
 
 	max_xy = fmax(fdf->map.size_x, fdf->map.size_y);
-	fdf->viewer.z_scale = max_xy / fdf->map.dz / 5;
+	fdf->viewer.z_scale = max_xy / fdf->map.dz / 10;
 }
 
 void	fdf_set_view(t_fdf *fdf, int view)

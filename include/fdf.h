@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/13 14:26:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:42:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,10 @@ typedef struct s_viewer {
 	float		rot[4][4];
 	float		proj[4][4];
 	t_vertice	**map_proj;
+	int			x_rev;
+	int			y_rev;
+	int			z_rev;
+	int			x_loop_first;
 }				t_viewer;
 
 typedef struct s_fdf {
@@ -182,6 +186,7 @@ void	fdf_update_proj(t_fdf *fdf);
 void	fdf_alloc_map_proj(t_fdf *fdf);
 void	fdf_get_map_proj(t_fdf *fdf);
 void	fdf_free_map_proj(t_fdf *fdf);
+void	fdf_draw_edge(t_fdf *fdf, int x, int y);
 void	fdf_draw_map(t_fdf *fdf);
 void	fdf_draw_help(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
