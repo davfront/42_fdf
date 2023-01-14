@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 10:53:42 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:38:02 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,17 @@ static void	fdf_get_edge_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y, \
 	(*p)[1][1] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x + 1][y + 1]);
 	if (force_bg_color)
 	{
-		(*p)[0][0].color = COLOR_BG;
-		(*p)[1][0].color = COLOR_BG;
-		(*p)[0][1].color = COLOR_BG;
-		(*p)[1][1].color = COLOR_BG;
+		(*p)[0][0].color = BLACK;
+		(*p)[1][0].color = BLACK;
+		(*p)[0][1].color = BLACK;
+		(*p)[1][1].color = BLACK;
+	}
+	else if (fdf->viewer.help)
+	{
+		(*p)[0][0].color = fdf_color_mix((*p)[0][0].color, BLACK, 0.5);
+		(*p)[1][0].color = fdf_color_mix((*p)[1][0].color, BLACK, 0.5);
+		(*p)[0][1].color = fdf_color_mix((*p)[0][1].color, BLACK, 0.5);
+		(*p)[1][1].color = fdf_color_mix((*p)[1][1].color, BLACK, 0.5);
 	}
 }
 

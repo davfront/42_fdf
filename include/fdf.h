@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 11:00:05 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:58:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@
 #  include <key_linux.h>
 # endif
 
-# define WIN_WIDTH		(1024)
-# define WIN_HEIGHT		(600)
+# define WIN_WIDTH	(1024)
+# define WIN_HEIGHT	(600)
 
-# define COLOR_BG		(0x00000000)
-# define COLOR_TXT		(0x00FFFFFF)
-# define COLOR_TOP		(0x00FF0000)
-# define COLOR_BOTTOM	(0x000000FF)
+# define BLACK		(0x00000000)
+# define WHITE		(0x00FFFFFF)
+# define RED		(0x00FF0000)
+# define GREEN		(0x0000FF00)
+# define BLUE		(0x000000FF)
 
-# define PI				(3.14159265)
+# define PI			(3.14159265)
 
 typedef struct s_rgb {
 	int	t;
@@ -95,6 +96,12 @@ typedef struct s_ui {
 	int		mouse_right_btn;
 }				t_ui;
 
+typedef enum e_color {
+	DISABLED,
+	MAP_VALUES,
+	Z_GRADIENT
+}				t_color;
+
 typedef enum e_render {
 	WIREFRAME,
 	WIREFRAME_NO_HIDDEN,
@@ -104,6 +111,7 @@ typedef enum e_render {
 typedef struct s_viewer {
 	int			perspective;
 	int			help;
+	t_color		color;
 	t_render	render;
 	float		zoom;
 	float		z_scale;
@@ -184,6 +192,9 @@ void	fdf_get_map_proj(t_fdf *fdf);
 void	fdf_free_map_proj(t_fdf *fdf);
 void	fdf_draw_edge(t_fdf *fdf, int x, int y);
 void	fdf_draw_map(t_fdf *fdf);
+void	fdf_draw_label(t_fdf *fdf, int line, char *label);
+void	fdf_draw_value(t_fdf *fdf, int line, char *value, int color);
+void	fdf_draw_info(t_fdf *fdf, int line, char *label, char *value);
 void	fdf_draw_help(t_fdf *fdf);
 int		fdf_render_frame(t_fdf *fdf);
 void	fdf_start_viewer(t_fdf *fdf);

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 10:55:06 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:23:58 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,20 @@
 static int	fdf_get_point_color(t_fdf *fdf, int x, int y)
 {
 	int		color;
-	int		z;
+	int		map_color;
+	int		map_z;
 	float	r;
 
-	if (fdf->map.has_color)
-	{
-		color = fdf->map.values[x][y].color;
-		if (color == -1)
-			color = COLOR_TXT;
-	}
-	else
-	{
-		z = fdf->map.values[x][y].z;
-		r = fabs((float)(z - fdf->map.z_min) / (float)fdf->map.dz);
-		color = fdf_color_mix(COLOR_BOTTOM, COLOR_TOP, r);
-	}
+	color = WHITE;
+	map_color = fdf->map.values[x][y].color;
+	map_z = fdf->map.values[x][y].z;
+	r = fabs((float)(map_z - fdf->map.z_min) / (float)fdf->map.dz);
+	if (fdf->viewer.color == MAP_VALUES && map_color != -1)
+		color = map_color;
+	else if (fdf->viewer.color == Z_GRADIENT)
+		color = fdf_color_mix(BLUE, RED, r);
+	if (fdf->viewer.render == SOLID)
+		color = fdf_color_mix(color, BLACK, (1 - r) * 0.2);
 	return (color);
 }
 

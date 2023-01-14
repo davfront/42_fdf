@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 11:00:23 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:49:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ int	fdf_on_keydown(int keycode, t_fdf *fdf)
 		fdf->viewer.help = !fdf->viewer.help;
 	if (keycode == KEY_P)
 		fdf->viewer.perspective = !fdf->viewer.perspective;
+	if (keycode == KEY_C)
+		fdf->viewer.color = (fdf->viewer.color + 1) % 3;
+	if (fdf->viewer.color == MAP_VALUES && !fdf->map.has_color)
+		fdf->viewer.color = (fdf->viewer.color + 1) % 3;
 	if (keycode == KEY_R)
 		fdf->viewer.render = (fdf->viewer.render + 1) % 3;
 	if (keycode == KEY_SPACE)
