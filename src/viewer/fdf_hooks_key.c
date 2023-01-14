@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 21:33:38 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:00:23 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ void	fdf_on_arrow_down(int keycode, t_fdf *fdf)
 	if (fdf->ui.key_space)
 	{
 		if (keycode == KEY_LEFT)
-			fdf->viewer.cx += -TRANSLATE_STEP;
+			fdf->viewer.cx += -10;
 		if (keycode == KEY_RIGHT)
-			fdf->viewer.cx += TRANSLATE_STEP;
+			fdf->viewer.cx += 10;
 		if (keycode == KEY_UP)
-			fdf->viewer.cy += -TRANSLATE_STEP;
+			fdf->viewer.cy += -10;
 		if (keycode == KEY_DOWN)
-			fdf->viewer.cy += TRANSLATE_STEP;
+			fdf->viewer.cy += 10;
 	}
 	else
 	{
 		if (keycode == KEY_LEFT)
-			fdf_matrix_rotate_y(fdf->viewer.rot, ROTATE_STEP);
+			fdf_matrix_rotate_y(fdf->viewer.rot, PI / 50);
 		if (keycode == KEY_RIGHT)
-			fdf_matrix_rotate_y(fdf->viewer.rot, -ROTATE_STEP);
+			fdf_matrix_rotate_y(fdf->viewer.rot, -PI / 50);
 		if (keycode == KEY_UP)
-			fdf_matrix_rotate_x(fdf->viewer.rot, -ROTATE_STEP);
+			fdf_matrix_rotate_x(fdf->viewer.rot, -PI / 50);
 		if (keycode == KEY_DOWN)
-			fdf_matrix_rotate_x(fdf->viewer.rot, ROTATE_STEP);
+			fdf_matrix_rotate_x(fdf->viewer.rot, PI / 50);
 	}
 }
 
@@ -43,16 +43,16 @@ void	fdf_on_plus_minus_down(int keycode, t_fdf *fdf)
 	if (fdf->ui.key_z)
 	{
 		if (keycode == KEY_PLUS)
-			fdf->viewer.z_scale *= SCALE_STEP;
+			fdf->viewer.z_scale *= 1.1;
 		if (keycode == KEY_MINUS)
-			fdf->viewer.z_scale /= SCALE_STEP;
+			fdf->viewer.z_scale /= 1.1;
 	}
 	else
 	{
 		if (keycode == KEY_PLUS)
-			fdf->viewer.zoom *= SCALE_STEP;
+			fdf->viewer.zoom *= 1.1;
 		if (keycode == KEY_MINUS)
-			fdf->viewer.zoom /= SCALE_STEP;
+			fdf->viewer.zoom /= 1.1;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 15:12:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:57:55 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	fdf_on_mouse_up(int button, int x, int y, t_fdf *fdf)
 	}
 	if (button == MOUSE_RIGHT)
 	{
-		fdf_matrix_rotate_y(fdf->viewer.rot, -fdf->ui.mouse_dx * MOUSE_ROT);
-		fdf_matrix_rotate_x(fdf->viewer.rot, fdf->ui.mouse_dy * MOUSE_ROT);
+		fdf_matrix_rotate_y(fdf->viewer.rot, -fdf->ui.mouse_dx * PI / 500);
+		fdf_matrix_rotate_x(fdf->viewer.rot, fdf->ui.mouse_dy * PI / 500);
 		fdf->ui.mouse_right_btn = 0;
 	}
 	fdf->ui.mouse_x0 = 0;

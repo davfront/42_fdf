@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/13 15:43:26 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:00:13 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ static void	fdf_draw_edges_xy(t_fdf *fdf)
 
 	x_rev = fdf->viewer.x_rev;
 	y_rev = fdf->viewer.y_rev;
-	x = 0 + x_rev * (fdf->map.size_x - 1);
-	while (x <= fdf->map.size_x - 1 && x >= 0)
+	x = 0 + x_rev * (fdf->map.size_x - 2);
+	while (x <= fdf->map.size_x - 2 && x >= 0)
 	{
-		y = 0 + y_rev * (fdf->map.size_y - 1);
-		while (y <= fdf->map.size_y - 1 && y >= 0)
+		y = 0 + y_rev * (fdf->map.size_y - 2);
+		while (y <= fdf->map.size_y - 2 && y >= 0)
 		{
 			fdf_draw_edge(fdf, x, y);
 			y += 1 - 2 * y_rev;
@@ -69,11 +69,11 @@ static void	fdf_draw_edges_yx(t_fdf *fdf)
 
 	x_rev = fdf->viewer.x_rev;
 	y_rev = fdf->viewer.y_rev;
-	y = 0 + y_rev * (fdf->map.size_y - 1);
-	while (y <= fdf->map.size_y - 1 && y >= 0)
+	y = 0 + y_rev * (fdf->map.size_y - 2);
+	while (y <= fdf->map.size_y - 2 && y >= 0)
 	{
-		x = 0 + x_rev * (fdf->map.size_x - 1);
-		while (x <= fdf->map.size_x - 1 && x >= 0)
+		x = 0 + x_rev * (fdf->map.size_x - 2);
+		while (x <= fdf->map.size_x - 2 && x >= 0)
 		{
 			fdf_draw_edge(fdf, x, y);
 			x += 1 - 2 * x_rev;

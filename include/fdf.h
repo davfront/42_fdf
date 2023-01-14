@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/13 15:42:34 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:00:05 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@
 
 # define PI				(3.14159265)
 
-# define ROTATE_STEP	(PI / 50)
-# define SCALE_STEP		(1.1)
-# define TRANSLATE_STEP	(10)
-
-# define MOUSE_ROT		(PI / 500)
-
 typedef struct s_rgb {
 	int	t;
 	int	r;
@@ -64,7 +58,7 @@ typedef struct s_vertice {
 	int	x;
 	int	y;
 	int	z;
-	int color;
+	int	color;
 }				t_vertice;
 
 typedef struct s_map_value {
@@ -102,9 +96,9 @@ typedef struct s_ui {
 }				t_ui;
 
 typedef enum e_render {
-    WIREFRAME,
-    WIREFRAME_NO_HIDDEN,
-    SOLID
+	WIREFRAME,
+	WIREFRAME_NO_HIDDEN,
+	SOLID
 }				t_render;
 
 typedef struct s_viewer {
@@ -115,6 +109,7 @@ typedef struct s_viewer {
 	float		z_scale;
 	int			cx;
 	int			cy;
+	float		z_cam;
 	float		rot[4][4];
 	float		proj[4][4];
 	t_vertice	**map_proj;
@@ -157,6 +152,7 @@ int		fdf_color_mix(int color1, int color2, float ratio);
 
 // img
 t_pixel	fdf_new_pixel(int x, int y, int color);
+t_pixel	fdf_vertice_to_pixel(t_vertice v);
 void	fdf_swap_pixels(t_pixel *p1, t_pixel *p2);
 void	fdf_draw_pixel(t_img *img, t_pixel p);
 void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);

@@ -6,31 +6,19 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/13 15:42:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:53:42 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static t_pixel	fdf_proj_px(t_fdf *fdf, int x, int y)
-{
-	t_pixel		p;
-	t_vertice	v;
-
-	v = fdf->viewer.map_proj[x][y];
-	p.x = v.x;
-	p.y = v.y;
-	p.color = v.color;
-	return (p);
-}
-
 static void	fdf_get_edge_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y, \
 	int force_bg_color)
 {
-	(*p)[0][0] = fdf_proj_px(fdf, x, y);
-	(*p)[1][0] = fdf_proj_px(fdf, x + 1, y);
-	(*p)[0][1] = fdf_proj_px(fdf, x, y + 1);
-	(*p)[1][1] = fdf_proj_px(fdf, x + 1, y + 1);
+	(*p)[0][0] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x][y]);
+	(*p)[1][0] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x + 1][y]);
+	(*p)[0][1] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x][y + 1]);
+	(*p)[1][1] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x + 1][y + 1]);
 	if (force_bg_color)
 	{
 		(*p)[0][0].color = COLOR_BG;
@@ -78,10 +66,37 @@ static void	fdf_draw_xy_wireframe(t_fdf *fdf, int x, int y)
 	}
 }
 
+static int	fdf_is_edge_visible(t_fdf *fdf, int x, int y)
+{
+	t_vertice	v[2][2];
+
+	v[0][0] = fdf->viewer.map_proj[x][y];
+	v[1][0] = fdf->viewer.map_proj[x + 1][y];
+	v[0][1] = fdf->viewer.map_proj[x][y + 1];
+	v[1][1] = fdf->viewer.map_proj[x + 1][y + 1];
+	if (v[0][0].x < 0 && v[1][0].x < 0 && v[0][1].x < 0 && v[1][1].x < 0)
+		return (0);
+	if (v[0][0].x >= WIN_WIDTH && v[1][0].x >= WIN_WIDTH
+		&& v[0][1].x >= WIN_WIDTH && v[1][1].x >= WIN_WIDTH)
+		return (0);
+	if (v[0][0].y < 0 && v[1][0].y < 0 && v[0][1].y < 0 && v[1][1].y < 0)
+		return (0);
+	if (v[0][0].y >= WIN_HEIGHT && v[1][0].y >= WIN_HEIGHT
+		&& v[0][1].y >= WIN_HEIGHT && v[1][1].y >= WIN_HEIGHT)
+		return (0);
+	if (fdf->viewer.perspective && (v[0][0].z >= fdf->viewer.z_cam
+		|| v[1][0].z >= fdf->viewer.z_cam || v[0][1].z >= fdf->viewer.z_cam
+		|| v[1][1].z >= fdf->viewer.z_cam))
+		return (0);
+	return (1);
+}
+
 void	fdf_draw_edge(t_fdf *fdf, int x, int y)
 {
 	t_render	r;
 
+	if (!fdf_is_edge_visible(fdf, x, y))
+		return ;
 	r = fdf->viewer.render;
 	if (r == SOLID || r == WIREFRAME_NO_HIDDEN)
 		fdf_draw_xy_solid(fdf, x, y, r == WIREFRAME_NO_HIDDEN);

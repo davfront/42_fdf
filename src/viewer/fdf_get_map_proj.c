@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/12 17:20:07 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:55:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ static int	fdf_get_point_color(t_fdf *fdf, int x, int y)
 static void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 {
 	float	v[4];
-	float	z_cam;
 
-	z_cam = fmax(WIN_WIDTH, WIN_HEIGHT);
 	v[0] = x;
 	v[1] = y;
 	v[2] = fdf->map.values[x][y].z;
@@ -46,16 +44,17 @@ static void	fdf_project_point(t_fdf *fdf, int x, int y, t_vertice *p)
 	fdf_matrix_transform_point(v, fdf->viewer.proj);
 	if (fdf->viewer.perspective)
 	{
-		p->x = WIN_WIDTH / 2 + (v[0] - WIN_WIDTH / 2) / (1 - v[2] / z_cam);
-		p->y = WIN_HEIGHT / 2 + (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / z_cam);
-		p->z = v[2] - z_cam;
+		p->x = WIN_WIDTH / 2
+			+ (v[0] - WIN_WIDTH / 2) / (1 - v[2] / fdf->viewer.z_cam);
+		p->y = WIN_HEIGHT / 2
+			+ (v[1] - WIN_HEIGHT / 2) / (1 - v[2] / fdf->viewer.z_cam);
 	}
 	else
 	{
 		p->x = v[0];
 		p->y = v[1];
-		p->z = v[2];
 	}
+	p->z = v[2];
 	p->color = fdf_get_point_color(fdf, x, y);
 }
 

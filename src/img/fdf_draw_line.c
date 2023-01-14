@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/24 16:23:43 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/14 08:41:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2)
 	int		i;
 	t_pixel	p;
 
-	if ((p1.x < 0 && p2.x < 0) || (p1.x > WIN_WIDTH && p2.x > WIN_WIDTH)
-		|| (p1.y < 0 && p2.y < 0) || (p1.y > WIN_HEIGHT && p2.y > WIN_HEIGHT))
+	if ((p1.x < 0 && p2.x < 0) || (p1.x >= WIN_WIDTH && p2.x >= WIN_WIDTH)
+		|| (p1.y < 0 && p2.y < 0) || (p1.y >= WIN_HEIGHT && p2.y >= WIN_HEIGHT))
 		return ;
 	if (p1.x == p2.x && p1.y == p2.y)
 		return (fdf_draw_pixel(img, p1));
