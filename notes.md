@@ -37,8 +37,8 @@ Issues to fix:
 - [x] Perspective with solid rendering
 - [x] Help blinking
 - [x] Help to update (usage, controls)
-- [ ] Zoom crash
-- [ ] Zoom with scroll
+- [x] Zoom with scroll
 - [x] Disable color gradient by default
+- [ ] Zoom crash
 - [ ] Fix right mouse button on macos
 - [ ] Last check: Norminette, Leaks, Sanitize
