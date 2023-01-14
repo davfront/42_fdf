@@ -34,9 +34,10 @@ leaks --atExit -- ./fdf maps/42.fdf
 
 Issues to fix:
 
-- [ ] Perspective with solid rendering
-- [ ] Help blinking
-- [ ] Help to update (usage, controls)
+- [x] Perspective with solid rendering
+- [x] Help blinking
+- [x] Help to update (usage, controls)
 - [ ] Zoom crash
-- [ ] Disable color gradient by default
+- [ ] Zoom with scroll
+- [x] Disable color gradient by default
 - [ ] Last check: Norminette, Leaks, Sanitize

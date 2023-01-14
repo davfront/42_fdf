@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/14 09:39:06 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/14 21:57:28 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS_FILES			=	\
 						viewer/fdf_free_map_proj.c\
 						viewer/fdf_draw_edge.c\
 						viewer/fdf_draw_map.c\
+						viewer/fdf_draw_help_utils.c\
 						viewer/fdf_draw_help.c\
 						viewer/fdf_render_frame.c\
 						viewer/fdf_start_viewer.c\
