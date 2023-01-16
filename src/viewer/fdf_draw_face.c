@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 16:04:29 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:47:31 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,59 +20,31 @@ static void	fdf_get_face_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y)
 	(*p)[1][1] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x + 1][y + 1]);
 }
 
-static void	fdf_draw_xy_solid(t_fdf *fdf, int x, int y)
+static void	fdf_draw_triangles(t_fdf *fdf, t_pixel (*p)[2][2], int x, int y)
 {
-	t_pixel	p[2][2];
 	int		z1;
 	int		z2;
 
-	if (fdf->viewer.render == WIREFRAME)
-		return ;
-	if (x >= fdf->map.size_x - 1 || y >= fdf->map.size_y - 1)
-		return ;
-	fdf_get_face_pixels(fdf, &p, x, y);
-	if (fdf->viewer.render == WIREFRAME_NO_HIDDEN)
-	{
-		p[0][0].color = BLACK;
-		p[1][0].color = BLACK;
-		p[0][1].color = BLACK;
-		p[1][1].color = BLACK;
-		p[0][0].z -= 2;
-		p[1][0].z -= 2;
-		p[0][1].z -= 2;
-		p[1][1].z -= 2;
-	}
 	z1 = fdf->map.values[x][y].z + fdf->map.values[x + 1][y + 1].z;
 	z2 = fdf->map.values[x + 1][y].z + fdf->map.values[x][y + 1].z;
 	if (z1 < z2)
 	{
-		fdf_draw_triangle(fdf, p[0][0], p[1][0], p[1][1]);
-		fdf_draw_triangle(fdf, p[0][0], p[1][1], p[0][1]);
+		fdf_draw_triangle(fdf, (*p)[0][0], (*p)[1][0], (*p)[1][1]);
+		fdf_draw_triangle(fdf, (*p)[0][0], (*p)[1][1], (*p)[0][1]);
 	}
 	else
 	{
-		fdf_draw_triangle(fdf, p[0][0], p[1][0], p[0][1]);
-		fdf_draw_triangle(fdf, p[1][0], p[1][1], p[0][1]);
+		fdf_draw_triangle(fdf, (*p)[0][0], (*p)[1][0], (*p)[0][1]);
+		fdf_draw_triangle(fdf, (*p)[1][0], (*p)[1][1], (*p)[0][1]);
 	}
-}
-
-static void	fdf_draw_xy_wireframe(t_fdf *fdf, int x, int y)
-{
-	t_pixel	p[2][2];
-
-	if (x >= fdf->map.size_x - 1 || y >= fdf->map.size_y - 1)
-		return ;
-	fdf_get_face_pixels(fdf, &p, x, y);
-	fdf_draw_line(fdf, p[0][0], p[1][0]);
-	fdf_draw_line(fdf, p[0][0], p[0][1]);
-	fdf_draw_line(fdf, p[1][0], p[1][1]);
-	fdf_draw_line(fdf, p[0][1], p[1][1]);
 }
 
 static int	fdf_is_face_visible(t_fdf *fdf, int x, int y)
 {
 	t_vertice	v[2][2];
 
+	if (x >= fdf->map.size_x - 1 || y >= fdf->map.size_y - 1)
+		return (0);
 	v[0][0] = fdf->viewer.map_proj[x][y];
 	v[1][0] = fdf->viewer.map_proj[x + 1][y];
 	v[0][1] = fdf->viewer.map_proj[x][y + 1];
@@ -96,8 +68,29 @@ static int	fdf_is_face_visible(t_fdf *fdf, int x, int y)
 
 void	fdf_draw_face(t_fdf *fdf, int x, int y)
 {
+	t_pixel	p[2][2];
+
 	if (!fdf_is_face_visible(fdf, x, y))
 		return ;
-	fdf_draw_xy_solid(fdf, x, y);
-	fdf_draw_xy_wireframe(fdf, x, y);
+	if (fdf->viewer.render != WIREFRAME)
+	{
+		fdf_get_face_pixels(fdf, &p, x, y);
+		if (fdf->viewer.render == WIREFRAME_NO_HIDDEN)
+		{
+			p[0][0].color = BLACK;
+			p[1][0].color = BLACK;
+			p[0][1].color = BLACK;
+			p[1][1].color = BLACK;
+			p[0][0].z -= 2;
+			p[1][0].z -= 2;
+			p[0][1].z -= 2;
+			p[1][1].z -= 2;
+		}
+		fdf_draw_triangles(fdf, &p, x, y);
+	}
+	fdf_get_face_pixels(fdf, &p, x, y);
+	fdf_draw_line(fdf, p[0][0], p[1][0]);
+	fdf_draw_line(fdf, p[0][0], p[0][1]);
+	fdf_draw_line(fdf, p[1][0], p[1][1]);
+	fdf_draw_line(fdf, p[0][1], p[1][1]);
 }
