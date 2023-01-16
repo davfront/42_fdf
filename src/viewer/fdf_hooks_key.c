@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 18:49:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:20:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,20 @@ void	fdf_on_arrow_down(int keycode, t_fdf *fdf)
 
 void	fdf_on_plus_minus_down(int keycode, t_fdf *fdf)
 {
+	float z_scale_base;
+	z_scale_base = fmax(fdf->map.size_x, fdf->map.size_y) / fdf->map.dz / 10;
 	if (fdf->ui.key_z)
 	{
-		if (keycode == KEY_PLUS)
+		if (keycode == KEY_PLUS && fdf->viewer.z_scale < z_scale_base * 8)
 			fdf->viewer.z_scale *= 1.1;
-		if (keycode == KEY_MINUS)
+		if (keycode == KEY_MINUS && fdf->viewer.z_scale > z_scale_base / 8)
 			fdf->viewer.z_scale /= 1.1;
 	}
 	else
 	{
-		if (keycode == KEY_PLUS)
+		if (keycode == KEY_PLUS && fdf->viewer.zoom < ZOOM_MAX)
 			fdf->viewer.zoom *= 1.1;
-		if (keycode == KEY_MINUS)
+		if (keycode == KEY_MINUS && fdf->viewer.zoom > ZOOM_MIN)
 			fdf->viewer.zoom /= 1.1;
 	}
 }

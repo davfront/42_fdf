@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 22:50:17 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:33:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	fdf_on_mouse_down(int button, int x, int y, t_fdf *fdf)
 {
-	if (button == MOUSE_SCROLL_UP)
+	if (button == MOUSE_SCROLL_UP && fdf->viewer.zoom < ZOOM_MAX)
 		fdf->viewer.zoom *= 1.1;
-	if (button == MOUSE_SCROLL_DOWN)
+	if (button == MOUSE_SCROLL_DOWN && fdf->viewer.zoom > ZOOM_MIN)
 		fdf->viewer.zoom /= 1.1;
 	if (button == MOUSE_LEFT)
 		fdf->ui.mouse_left_btn = 1;

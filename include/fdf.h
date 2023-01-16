@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 10:58:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:21:56 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define BLUE		(0x000000FF)
 
 # define PI			(3.14159265)
+
+# define ZOOM_MIN	(1)
+# define ZOOM_MAX	(100)
 
 typedef struct s_rgb {
 	int	t;

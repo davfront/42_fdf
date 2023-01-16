@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:34 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 10:53:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:21:29 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fdf_draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2)
 	{
 		p.x = p1.x + (int)(i * delta_x);
 		p.y = p1.y + (int)(i * delta_y);
-		p.z = p1.z + (int)(i * delta_z);
+		p.z = ceil(p1.z + (int)(i * delta_z));
 		p.color = fdf_color_mix(p1.color, p2.color, (float)i / len);
 		fdf_draw_pixel(fdf, p);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:47:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 10:59:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:31:48 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	fdf_draw_triangle_pixel(t_fdf *fdf, t_pixel t[3], t_pixel p)
 			p.color = fdf_color_mix(t[0].color, t[1].color, w2 / (w1 + w2));
 			p.color = fdf_color_mix(p.color, t[2].color, w3);
 		}
-		p.z = t[0].z * w1 + t[1].z * w2 + t[2].z * w3;
+		p.z = floor(t[0].z * w1 + t[1].z * w2 + t[2].z * w3);
 		fdf_draw_pixel(fdf, p);
 	}
 }
