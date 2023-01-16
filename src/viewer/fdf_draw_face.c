@@ -6,13 +6,13 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 22:38:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 11:00:24 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	fdf_get_edge_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y, \
+static void	fdf_get_face_pixels(t_fdf *fdf, t_pixel	(*p)[2][2], int x, int y, \
 	int force_bg_color)
 {
 	(*p)[0][0] = fdf_vertice_to_pixel(fdf->viewer.map_proj[x][y]);
@@ -43,18 +43,18 @@ static void	fdf_draw_xy_solid(t_fdf *fdf, int x, int y, int force_bg_color)
 
 	if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
 	{
-		fdf_get_edge_pixels(fdf, &p, x, y, force_bg_color);
+		fdf_get_face_pixels(fdf, &p, x, y, force_bg_color);
 		z1 = fdf->map.values[x][y].z + fdf->map.values[x + 1][y + 1].z;
 		z2 = fdf->map.values[x + 1][y].z + fdf->map.values[x][y + 1].z;
-		if (z1 < z2 && fdf->viewer.z_rev)
+		if (z1 < z2)
 		{
-			fdf_draw_triangle(&fdf->img, p[0][0], p[1][0], p[1][1]);
-			fdf_draw_triangle(&fdf->img, p[0][0], p[1][1], p[0][1]);
+			fdf_draw_triangle(fdf, p[0][0], p[1][0], p[1][1]);
+			fdf_draw_triangle(fdf, p[0][0], p[1][1], p[0][1]);
 		}
 		else
 		{
-			fdf_draw_triangle(&fdf->img, p[0][0], p[1][0], p[0][1]);
-			fdf_draw_triangle(&fdf->img, p[1][0], p[1][1], p[0][1]);
+			fdf_draw_triangle(fdf, p[0][0], p[1][0], p[0][1]);
+			fdf_draw_triangle(fdf, p[1][0], p[1][1], p[0][1]);
 		}
 	}
 }
@@ -65,15 +65,15 @@ static void	fdf_draw_xy_wireframe(t_fdf *fdf, int x, int y)
 
 	if (x < fdf->map.size_x - 1 && y < fdf->map.size_y - 1)
 	{
-		fdf_get_edge_pixels(fdf, &p, x, y, 0);
-		fdf_draw_line(&fdf->img, p[0][0], p[1][0]);
-		fdf_draw_line(&fdf->img, p[0][0], p[0][1]);
-		fdf_draw_line(&fdf->img, p[1][0], p[1][1]);
-		fdf_draw_line(&fdf->img, p[0][1], p[1][1]);
+		fdf_get_face_pixels(fdf, &p, x, y, 0);
+		fdf_draw_line(fdf, p[0][0], p[1][0]);
+		fdf_draw_line(fdf, p[0][0], p[0][1]);
+		fdf_draw_line(fdf, p[1][0], p[1][1]);
+		fdf_draw_line(fdf, p[0][1], p[1][1]);
 	}
 }
 
-static int	fdf_is_edge_visible(t_fdf *fdf, int x, int y)
+static int	fdf_is_face_visible(t_fdf *fdf, int x, int y)
 {
 	t_vertice	v[2][2];
 
@@ -98,11 +98,11 @@ static int	fdf_is_edge_visible(t_fdf *fdf, int x, int y)
 	return (1);
 }
 
-void	fdf_draw_edge(t_fdf *fdf, int x, int y)
+void	fdf_draw_face(t_fdf *fdf, int x, int y)
 {
 	t_render	r;
 
-	if (!fdf_is_edge_visible(fdf, x, y))
+	if (!fdf_is_face_visible(fdf, x, y))
 		return ;
 	r = fdf->viewer.render;
 	if (r == SOLID || r == WIREFRAME_NO_HIDDEN)

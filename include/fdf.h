@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 21:58:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 10:58:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ typedef struct s_rgb {
 }				t_rgb;
 
 typedef struct s_pixel {
-	int	x;
-	int	y;
-	int	color;
+	int		x;
+	int		y;
+	int		color;
+	float	z;
 }				t_pixel;
 
 typedef struct s_triangle {
@@ -56,10 +57,10 @@ typedef struct s_triangle {
 }				t_triangle;
 
 typedef struct s_vertice {
-	int	x;
-	int	y;
-	int	z;
-	int	color;
+	float	x;
+	float	y;
+	float	z;
+	int		color;
 }				t_vertice;
 
 typedef struct s_map_value {
@@ -134,6 +135,7 @@ typedef struct s_fdf {
 	void		*mlx;
 	void		*win;
 	t_img		img;
+	float		z_buffer[WIN_WIDTH][WIN_HEIGHT];
 	t_viewer	viewer;
 	t_ui		ui;
 }				t_fdf;
@@ -162,9 +164,10 @@ int		fdf_color_mix(int color1, int color2, float ratio);
 t_pixel	fdf_new_pixel(int x, int y, int color);
 t_pixel	fdf_vertice_to_pixel(t_vertice v);
 void	fdf_swap_pixels(t_pixel *p1, t_pixel *p2);
-void	fdf_draw_pixel(t_img *img, t_pixel p);
-void	fdf_draw_line(t_img *img, t_pixel p1, t_pixel p2);
-void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3);
+void	fdf_draw_pixel(t_fdf *fdf, t_pixel p);
+void	fdf_draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
+void	fdf_draw_triangle(t_fdf *fdf, t_pixel p1, t_pixel p2, t_pixel p3);
+void	fdf_init_z_buffer(t_fdf *fdf);
 
 // matrix
 void	fdf_matrix_copy(float dst[4][4], float src[4][4]);
@@ -190,7 +193,7 @@ void	fdf_update_proj(t_fdf *fdf);
 void	fdf_alloc_map_proj(t_fdf *fdf);
 void	fdf_get_map_proj(t_fdf *fdf);
 void	fdf_free_map_proj(t_fdf *fdf);
-void	fdf_draw_edge(t_fdf *fdf, int x, int y);
+void	fdf_draw_face(t_fdf *fdf, int x, int y);
 void	fdf_draw_map(t_fdf *fdf);
 void	fdf_draw_label(t_fdf *fdf, int line, char *label);
 void	fdf_draw_value(t_fdf *fdf, int line, char *value, int color);

@@ -6,13 +6,13 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:47:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/03 15:04:25 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/16 10:59:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	fdf_draw_triangle_pixel(t_img *img, t_pixel t[3], t_pixel p)
+static void	fdf_draw_triangle_pixel(t_fdf *fdf, t_pixel t[3], t_pixel p)
 {
 	float	w1;
 	float	w2;
@@ -36,11 +36,12 @@ static void	fdf_draw_triangle_pixel(t_img *img, t_pixel t[3], t_pixel p)
 			p.color = fdf_color_mix(t[0].color, t[1].color, w2 / (w1 + w2));
 			p.color = fdf_color_mix(p.color, t[2].color, w3);
 		}
-		fdf_draw_pixel(img, p);
+		p.z = t[0].z * w1 + t[1].z * w2 + t[2].z * w3;
+		fdf_draw_pixel(fdf, p);
 	}
 }
 
-void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3)
+void	fdf_draw_triangle(t_fdf *fdf, t_pixel p1, t_pixel p2, t_pixel p3)
 {
 	t_pixel	min;
 	t_pixel	max;
@@ -60,7 +61,7 @@ void	fdf_draw_triangle(t_img *img, t_pixel p1, t_pixel p2, t_pixel p3)
 			t[0] = p1;
 			t[1] = p2;
 			t[2] = p3;
-			fdf_draw_triangle_pixel(img, t, p);
+			fdf_draw_triangle_pixel(fdf, t, p);
 			p.y++;
 		}
 		p.x++;

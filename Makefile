@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:34:41 by dapereir          #+#    #+#              #
-#    Updated: 2023/01/14 21:57:28 by dapereir         ###   ########.fr        #
+#    Updated: 2023/01/16 11:05:26 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS_FILES			=	\
 						img/fdf_draw_pixel.c\
 						img/fdf_draw_line.c\
 						img/fdf_draw_triangle.c\
+						img/fdf_init_z_buffer.c\
 						\
 						matrix/fdf_matrix_copy.c\
 						matrix/fdf_matrix_multiply.c\
@@ -60,7 +61,7 @@ SRCS_FILES			=	\
 						viewer/fdf_alloc_map_proj.c\
 						viewer/fdf_get_map_proj.c\
 						viewer/fdf_free_map_proj.c\
-						viewer/fdf_draw_edge.c\
+						viewer/fdf_draw_face.c\
 						viewer/fdf_draw_map.c\
 						viewer/fdf_draw_help_utils.c\
 						viewer/fdf_draw_help.c\
