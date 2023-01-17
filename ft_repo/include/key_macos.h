@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 11:08:26 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/11 10:43:43 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 10:15:14 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@
 // Mouse
 
 # define MOUSE_LEFT			1
-# define MOUSE_RIGHT		3
-# define MOUSE_MIDDLE		2
+# define MOUSE_RIGHT		2
+# define MOUSE_MIDDLE		3
 # define MOUSE_SCROLL_UP	4
 # define MOUSE_SCROLL_DOWN	5
 
