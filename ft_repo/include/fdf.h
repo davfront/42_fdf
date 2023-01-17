@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 17:21:56 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 10:30:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@
 
 # if defined(__APPLE__)
 #  include <key_macos.h>
+#  define HELP_OFFSET_Y	(0)
+#  define HELP_VALUE_X	(220)
+#  define HELP_WIDTH	(590)
 # else
 #  include <key_linux.h>
+#  define HELP_OFFSET_Y	(20)
+#  define HELP_VALUE_X	(160)
+#  define HELP_WIDTH	(390)
 # endif
 
 # define WIN_WIDTH	(1024)

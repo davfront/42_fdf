@@ -39,6 +39,6 @@ Issues to fix:
 - [x] Help to update (usage, controls)
 - [x] Zoom with scroll
 - [x] Disable color gradient by default
-- [ ] Zoom crash
-- [ ] Fix right mouse button on macos
+- [x] Zoom crash
+- [x] Fix right mouse button on macos
 - [ ] Last check: Norminette, Leaks, Sanitize
