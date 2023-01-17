@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 21:03:41 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 09:04:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:45:28 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	fdf_start_viewer(t_fdf *fdf)
 	fdf_init_viewer(fdf);
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
-	ft_printf("FDF OPENED - For Help, press [H] in the viewer\n");
+	ft_printf("[%s] File opened - For Help, press [H] in the viewer\n", fdf->title);
 	fdf_hooks(fdf);
 	mlx_loop_hook(fdf->mlx, fdf_render_frame, fdf);
 	mlx_loop(fdf->mlx);
