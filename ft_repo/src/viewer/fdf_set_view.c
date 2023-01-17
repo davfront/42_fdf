@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:37 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:13:02 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,11 @@ static void	fdf_init_center(t_fdf *fdf)
 	fdf->viewer.cy = WIN_HEIGHT / 2;
 }
 
-static void	fdf_init_zoom(t_fdf *fdf)
-{
-	float	zoom_w;
-	float	zoom_h;
-
-	zoom_w = WIN_WIDTH * 0.67 / (fdf->map.size_x - 1);
-	zoom_h = WIN_HEIGHT * 0.67 / (fdf->map.size_y - 1);
-	fdf->viewer.zoom = fmin(zoom_w, zoom_h);
-}
-
-static void	fdf_init_z_scale(t_fdf *fdf)
-{
-	float	max_xy;
-
-	if (fdf->map.dz == 0)
-		fdf->viewer.z_scale = 1;
-	else
-	{
-		max_xy = fmax(fdf->map.size_x, fdf->map.size_y);
-		fdf->viewer.z_scale = max_xy / fdf->map.dz / 10;
-	}
-}
-
 void	fdf_set_view(t_fdf *fdf, int view)
 {
 	fdf_init_center(fdf);
-	fdf_init_zoom(fdf);
-	fdf_init_z_scale(fdf);
+	fdf->viewer.zoom = fdf->viewer.zoom_base;
+	fdf->viewer.z_scale = fdf->viewer.z_scale_base;
 	fdf_matrix_init(fdf->viewer.rot);
 	if (view == 2)
 	{

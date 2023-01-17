@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/17 10:30:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:22:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@
 # define BLUE		(0x000000FF)
 
 # define PI			(3.14159265)
-
-# define ZOOM_MIN	(1)
-# define ZOOM_MAX	(100)
 
 typedef struct s_rgb {
 	int	t;
@@ -123,7 +120,9 @@ typedef struct s_viewer {
 	int			help;
 	t_color		color;
 	t_render	render;
+	float		zoom_base;
 	float		zoom;
+	float		z_scale_base;
 	float		z_scale;
 	int			cx;
 	int			cy;

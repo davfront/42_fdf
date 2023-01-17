@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/16 20:28:57 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:35:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,22 @@ void	fdf_on_arrow_down(int keycode, t_fdf *fdf)
 
 void	fdf_on_plus_minus_down(int keycode, t_fdf *fdf)
 {
-	float	z_scale_base;
+	t_viewer	vwr;
 
-	z_scale_base = fmax(fdf->map.size_x, fdf->map.size_y) / fdf->map.dz / 10;
+	vwr = fdf->viewer;
 	if (fdf->ui.key_z)
 	{
-		if (keycode == KEY_PLUS && fdf->viewer.z_scale < z_scale_base * 8)
+		if (keycode == KEY_PLUS && vwr.z_scale < vwr.z_scale_base * 8)
 			fdf->viewer.z_scale *= 1.1;
-		if (keycode == KEY_MINUS && fdf->viewer.z_scale > z_scale_base / 8)
+		if (keycode == KEY_MINUS && vwr.z_scale > vwr.z_scale_base / 8)
 			fdf->viewer.z_scale /= 1.1;
 	}
 	else
 	{
-		if (keycode == KEY_PLUS && fdf->viewer.zoom < ZOOM_MAX)
+		if (keycode == KEY_PLUS && vwr.zoom < \
+			vwr.zoom_base * fmax(fdf->map.size_x, fdf->map.size_y) / 5)
 			fdf->viewer.zoom *= 1.1;
-		if (keycode == KEY_MINUS && fdf->viewer.zoom > ZOOM_MIN)
+		if (keycode == KEY_MINUS && vwr.zoom > vwr.zoom_base / 20)
 			fdf->viewer.zoom /= 1.1;
 	}
 }
