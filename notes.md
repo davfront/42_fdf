@@ -15,7 +15,10 @@ export DISPLAY=localhost:0.0 && make && ./fdf maps/42.fdf
 ## Check leaks
 
 ```bash
+# macos
 leaks --atExit -- ./fdf maps/42.fdf
+# linux
+valgrind --leak-check=full ./fdf maps/42.fdf
 ```
 
 ## Features
