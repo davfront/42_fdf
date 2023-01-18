@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:35:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/01/14 19:23:58 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:05:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static int	fdf_get_point_color(t_fdf *fdf, int x, int y)
 	color = WHITE;
 	map_color = fdf->map.values[x][y].color;
 	map_z = fdf->map.values[x][y].z;
-	r = fabs((float)(map_z - fdf->map.z_min) / (float)fdf->map.dz);
+	if (fdf->map.dz == 0)
+		r = 0;
+	else
+		r = fabs((float)(map_z - fdf->map.z_min) / (float)fdf->map.dz);
 	if (fdf->viewer.color == MAP_VALUES && map_color != -1)
 		color = map_color;
 	else if (fdf->viewer.color == Z_GRADIENT)
