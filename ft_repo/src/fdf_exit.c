@@ -19,3 +19,11 @@ int	fdf_exit(t_fdf *fdf)
 	exit(1);
 	return (0);
 }
+
+int	fdf_success_exit(t_fdf *fdf)
+{
+	fdf_free_all(fdf);
+	ft_printf("[%s] File closed\n", fdf->title);
+	exit(0);
+	return (0);
+}

@@ -80,27 +80,15 @@ OBJS_DIR			=	./obj
 OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
 
 HEADER_DIR			=	./include
-HEADER				=	$(HEADER_DIR)/fdf.h $(HEADER_DIR)/key_linux.h $(HEADER_DIR)/key_macos.h
+HEADER				=	$(HEADER_DIR)/fdf.h $(HEADER_DIR)/keycodes.h
 HEADER_INC			=	-I $(HEADER_DIR)
 
-# Detect OS
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-#	Linux
-	MLX_DIR				=	./minilibx-linux
-	MLX					=	$(MLX_DIR)/libmlx.a
-	MLX_INC				=	-I $(MLX_DIR)
-	MLX_OBJ_FLAGS		=	-I/usr/include $(HEADER_INC) $(MLX_INC) -O3
-	MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -L/usr/lib $(MLX_INC) -lXext -lX11 -lm -lz
-else
-#	MacOS
-	MLX_DIR				=	./minilibx-macos
-	MLX					=	$(MLX_DIR)/libmlx.a
-	MLX_INC				=	-I $(MLX_DIR)
-	MLX_OBJ_FLAGS		=	$(MLX_INC) $(HEADER_INC)
-	MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -framework OpenGL -framework AppKit
-endif
-
+MLX_DIR				=	./minilibx-linux
+MLX					=	$(MLX_DIR)/libmlx.a
+MLX_INC				=	-I $(MLX_DIR)
+MLX_OBJ_FLAGS		=	-I/usr/include $(HEADER_INC) $(MLX_INC) -O3
+MLX_FLAGS			=	-L $(MLX_DIR) -l mlx -L/usr/lib $(MLX_INC) -lXext -lX11 -lm -lz
+ 
 FT_DIR				=	./libft
 FT					=	$(FT_DIR)/libft.a
 FT_INC				=	-I $(FT_DIR)/include

@@ -75,7 +75,7 @@ void	fdf_on_number_down(int keycode, t_fdf *fdf)
 int	fdf_on_keydown(int keycode, t_fdf *fdf)
 {
 	if (keycode == KEY_ESC)
-		fdf_exit(fdf);
+		fdf_success_exit(fdf);
 	if (keycode == KEY_H)
 		fdf->viewer.help = !fdf->viewer.help;
 	if (keycode == KEY_P)

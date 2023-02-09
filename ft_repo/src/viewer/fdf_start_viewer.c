@@ -23,7 +23,8 @@ void	fdf_start_viewer(t_fdf *fdf)
 		fdf_error_exit("Minilibx initialization failed");
 	}
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, fdf->title);
-	ft_printf("[%s] File opened - For Help, press [H] in the viewer\n", fdf->title);
+	ft_printf("[%s] File opened - For Help, press [H] in the viewer\n", \
+		fdf->title);
 	fdf_hooks(fdf);
 	mlx_loop_hook(fdf->mlx, fdf_render_frame, fdf);
 	mlx_loop(fdf->mlx);

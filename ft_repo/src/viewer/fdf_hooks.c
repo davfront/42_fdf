@@ -14,7 +14,7 @@
 
 void	fdf_hooks(t_fdf *fdf)
 {
-	mlx_hook(fdf->win, 17, 1L << 0, fdf_exit, fdf);
+	mlx_hook(fdf->win, 17, 1L << 0, fdf_success_exit, fdf);
 	mlx_hook(fdf->win, 2, 1L << 0, fdf_on_keydown, fdf);
 	mlx_hook(fdf->win, 3, 1L << 1, fdf_on_keyup, fdf);
 	mlx_hook(fdf->win, 4, 1L << 2, fdf_on_mouse_down, fdf);

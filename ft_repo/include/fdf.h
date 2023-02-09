@@ -18,29 +18,22 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
+# include <keycodes.h>
 
-# if defined(__APPLE__)
-#  include <key_macos.h>
-#  define HELP_OFFSET_Y	(0)
-#  define HELP_VALUE_X	(220)
-#  define HELP_WIDTH	(590)
-# else
-#  include <key_linux.h>
-#  define HELP_OFFSET_Y	(20)
-#  define HELP_VALUE_X	(160)
-#  define HELP_WIDTH	(390)
-# endif
+# define HELP_OFFSET_Y	(20)
+# define HELP_VALUE_X	(160)
+# define HELP_WIDTH		(390)
 
-# define WIN_WIDTH	(1024)
-# define WIN_HEIGHT	(600)
+# define WIN_WIDTH		(1600)
+# define WIN_HEIGHT		(900)
 
-# define BLACK		(0x00000000)
-# define WHITE		(0x00FFFFFF)
-# define RED		(0x00FF0000)
-# define GREEN		(0x0000FF00)
-# define BLUE		(0x000000FF)
+# define BLACK			(0x00000000)
+# define WHITE			(0x00FFFFFF)
+# define RED			(0x00FF0000)
+# define GREEN			(0x0000FF00)
+# define BLUE			(0x000000FF)
 
-# define PI			(3.14159265)
+# define PI				(3.14159265)
 
 typedef struct s_rgb {
 	int	t;
@@ -214,5 +207,6 @@ void	fdf_free_map_proj(t_fdf *fdf);
 // exit
 void	fdf_free_all(t_fdf *fdf);
 int		fdf_exit(t_fdf *fdf);
+int		fdf_success_exit(t_fdf *fdf);
 
 #endif
